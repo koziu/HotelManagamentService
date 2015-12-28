@@ -1,0 +1,100 @@
+﻿@using System.Web.UI.WebControls
+@model HotelManagementService.Models.EmployeeModels
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title fa fa-odnoklassniki"> | <b>Usuń</b></h3>
+                    <hr />
+                </div>
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Surname)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Surname)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Address)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Address)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DeliveriesAddress)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.DeliveriesAddress)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.PhoneNumber)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.BrithDay)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.BrithDay)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.BrithPlace)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.BrithPlace)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.TaxId)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.TaxId)
+                        </dd>
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Usuń" class="btn btn-danger" /> 
+                            @Html.ActionLink("Powrót", "Index", null, new { @class = "btn btn-default" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
