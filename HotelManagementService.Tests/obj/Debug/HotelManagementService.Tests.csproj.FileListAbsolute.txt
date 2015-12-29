@@ -40,3 +40,45 @@ C:\Users\mateusz.kozak\Documents\Visual Studio 2013\Projects\HotelManagementServ
 C:\Users\mateusz.kozak\Documents\Visual Studio 2013\Projects\HotelManagementService.v2\HotelManagementService\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\mateusz.kozak\Documents\Visual Studio 2013\Projects\HotelManagementService.v2\HotelManagementService\HotelManagementService.Tests\obj\Debug\HotelManagementService.Tests.dll
 C:\Users\mateusz.kozak\Documents\Visual Studio 2013\Projects\HotelManagementService.v2\HotelManagementService\HotelManagementService.Tests\obj\Debug\HotelManagementService.Tests.pdb
+D:\!Praca Inżynierska\HotelManagementService.Tests\obj\Debug\HotelManagementService.Tests.csprojResolveAssemblyReference.cache
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\HotelManagementService.Tests.dll.config
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\HotelManagementService.Tests.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\HotelManagementService.Tests.pdb
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\HotelManagementService.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Newtonsoft.Json.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Owin.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.Helpers.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.Mvc.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.Razor.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.WebPages.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\EntityFramework.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.Optimization.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.Security.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\HotelManagementService.pdb
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Newtonsoft.Json.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.Helpers.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.Mvc.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.Razor.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.WebPages.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\EntityFramework.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\System.Web.Optimization.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.Security.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+D:\!Praca Inżynierska\HotelManagementService.Tests\obj\Debug\HotelManagementService.Tests.dll
+D:\!Praca Inżynierska\HotelManagementService.Tests\obj\Debug\HotelManagementService.Tests.pdb

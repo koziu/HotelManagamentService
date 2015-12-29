@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2>Lista roli </h2>
+
+    @Html.ActionLink("Utwórz nową rolę", "Create") | @Html.ActionLink("Zarządzaj rolami", "ManageUserRoles")
+    <hr />
+    <div>
+        @foreach (var role in Model)
+        {
+            <p>
+                <strong>@role.Name | </strong>
+                <span onclick="return confirm('Na pewno chcesz usunąć??')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:red;">Delete</a></span> |
+                @Html.ActionLink("Edytuj", "Edit", new { roleName = @role.Name })
+            </p>
+        }
+    </div>

@@ -1,3 +1,5 @@
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace HotelManagementService.Migrations
 {
     using System;
@@ -14,18 +16,11 @@ namespace HotelManagementService.Migrations
 
         protected override void Seed(HotelManagementService.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+          IdentityRole administrator = new IdentityRole("Administrator");
+          IdentityRole employee = new IdentityRole("Emoployee");
+          context.Roles.Add(administrator);
+          context.Roles.Add(employee);
+          context.SaveChanges();
         }
     }
 }
