@@ -1655,6 +1655,10 @@
     <Content Include="Views\Room\Edit.cshtml" />
     <Content Include="Views\Room\Index.cshtml" />
     <Content Include="Views\Shared\_ManagementLayout.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <None Include="Views\Roles\Create.cshtml" />
     <None Include="Views\Roles\Edit.cshtml" />
     <None Include="Views\Roles\Index.cshtml" />

@@ -7,8 +7,7 @@ using HotelManagementService.DAL.Context;
 using HotelManagementService.Models;
 
 namespace HotelManagementService.Controllers
-{
-  [Authorize(Roles = "Client")]
+{       
   public class EmployeeController : Controller
   {
     private readonly HotelManagementContext db = new HotelManagementContext();
@@ -26,7 +25,7 @@ namespace HotelManagementService.Controllers
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      EmployeeModels employeeModels = await db.EmployeeModels.FindAsync(id);
+      var employeeModels = await db.EmployeeModels.FindAsync(id);
       if (employeeModels == null)
       {
         return HttpNotFound();
@@ -34,7 +33,9 @@ namespace HotelManagementService.Controllers
       return View(employeeModels);
     }
 
+
     // GET: Employee/Create
+    [Authorize(Roles = "Administrator")]
     public ActionResult Create()
     {
       return View();
@@ -43,8 +44,10 @@ namespace HotelManagementService.Controllers
     // POST: Employee/Create
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult> Create(
       [Bind(Include = "Id,Name,Surname,Address,DeliveriesAddress,Email,PhoneNumber,BrithDay,BrithPlace,TaxId")] EmployeeModels employeeModels)
     {
@@ -59,6 +62,7 @@ namespace HotelManagementService.Controllers
       return View(employeeModels);
     }
 
+    [Authorize(Roles = "Administrator")]
     // GET: Employee/Edit/5
     public async Task<ActionResult> Edit(Guid id)
     {
@@ -66,7 +70,7 @@ namespace HotelManagementService.Controllers
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      EmployeeModels employeeModels = await db.EmployeeModels.FindAsync(id);
+      var employeeModels = await db.EmployeeModels.FindAsync(id);
       if (employeeModels == null)
       {
         return HttpNotFound();
@@ -77,6 +81,7 @@ namespace HotelManagementService.Controllers
     // POST: Employee/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [Authorize(Roles = "Administrator")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Edit(
@@ -92,13 +97,14 @@ namespace HotelManagementService.Controllers
     }
 
     // GET: Employee/Delete/5
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult> Delete(Guid id)
     {
       if (id == null)
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      EmployeeModels employeeModels = await db.EmployeeModels.FindAsync(id);
+      var employeeModels = await db.EmployeeModels.FindAsync(id);
       if (employeeModels == null)
       {
         return HttpNotFound();
@@ -107,11 +113,12 @@ namespace HotelManagementService.Controllers
     }
 
     // POST: Employee/Delete/5
+    [Authorize(Roles = "Administrator")]
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> DeleteConfirmed(Guid id)
     {
-      EmployeeModels employeeModels = await db.EmployeeModels.FindAsync(id);
+      var employeeModels = await db.EmployeeModels.FindAsync(id);
       db.EmployeeModels.Remove(employeeModels);
       await db.SaveChangesAsync();
       return RedirectToAction("Index");

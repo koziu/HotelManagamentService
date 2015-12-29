@@ -92,6 +92,7 @@ namespace HotelManagementService.Controllers
     [ValidateAntiForgeryToken]
     public ActionResult RoleAddToUser(string UserName, string RoleName)
     {
+
       ApplicationUser user = _context.Users.FirstOrDefault(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase));
       var account = new AccountController();
       account.UserManager.AddToRole(user.Id, RoleName);
