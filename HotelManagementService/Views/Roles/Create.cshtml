@@ -2,20 +2,32 @@
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_ManagementLayout.cshtml";
 }
-
-<h2>Create Role</h2>
-@Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
-<hr />
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <div>
-        Role name
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title fa fa-lock"> | <b>Utwórz rolę</b></h3>
+                    <hr />
+                    @Html.ActionLink("Utwórz nową rolę", "Create", null, new { @class = "btn btn-danger", style = "margin-right:10px;" })  @Html.ActionLink("Zarządzaj rolami", "ManageUserRoles", null, new { @class = "btn btn-danger", style = "margin-right:10px;" })
+                    <hr />
+                </div>
+                <div class="box-body" align="center">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div>
+                            <h4><b>Nazwa roli</b></h4>
+                        </div>
+                        <p>
+                            @Html.TextBox("RoleName",null,new {@placeholder = "Nazwa roli"})
+                        </p>
+                        <input type="submit" value="Zapisz" class="btn btn-danger"/>
+                        @Html.ActionLink("Powrót", "Index", null, new { @class = "btn btn-default" })
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-    <p>
-        @Html.TextBox("RoleName")
-    </p>
-    <input type="submit" value="Save" />
-}
+</section>

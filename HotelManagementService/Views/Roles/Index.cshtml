@@ -1,19 +1,32 @@
-﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
-    @{
-        ViewBag.Title = "Index";
-    }
-
-    <h2>Lista roli </h2>
-
-    @Html.ActionLink("Utwórz nową rolę", "Create") | @Html.ActionLink("Zarządzaj rolami", "ManageUserRoles")
-    <hr />
-    <div>
-        @foreach (var role in Model)
-        {
-            <p>
-                <strong>@role.Name | </strong>
-                <span onclick="return confirm('Na pewno chcesz usunąć??')"><a href="/Roles/Delete?RoleName=@role.Name" class="delLink" style="color:red;">Delete</a></span> |
-                @Html.ActionLink("Edytuj", "Edit", new { roleName = @role.Name })
-            </p>
-        }
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Index";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title fa fa-lock"> | <b>Lista roli</b></h3>
+                    <hr/>
+                    @Html.ActionLink("Utwórz nową rolę", "Create", null, new { @class = "btn btn-danger", style = "margin-right: 10px;" })  @Html.ActionLink("Zarządzaj rolami", "ManageUserRoles", null, new { @class = "btn btn-danger", style = "margin-right: 10px;" })
+                    <hr />
+                </div>
+                <div class="box-body">
+                    @foreach (IdentityRole role in Model)
+                    {
+                        <div class="col-md-3">
+                            <h5>
+                                @role.Name
+                            </h5>
+                                <span onclick=" return confirm('Na pewno chcesz usunąć??') "><a href="/Roles/Delete?RoleName=@role.Name" class="btn btn-danger" style="margin-right: 5px;">Delete</a></span>
+                                @Html.ActionLink("Edytuj", "Edit", new { roleName = @role.Name }, new { @class = "btn btn-default", style = "margin-right: 10px;" })
+                            
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
+</section>

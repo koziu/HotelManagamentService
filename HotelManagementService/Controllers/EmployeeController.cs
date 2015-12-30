@@ -13,12 +13,14 @@ namespace HotelManagementService.Controllers
     private readonly HotelManagementContext db = new HotelManagementContext();
 
     // GET: Employee
+    [Authorize]
     public async Task<ActionResult> Index()
     {
       return View(await db.EmployeeModels.ToListAsync());
     }
 
     // GET: Employee/Details/5
+    [Authorize]
     public async Task<ActionResult> Details(Guid id)
     {
       if (id == null)

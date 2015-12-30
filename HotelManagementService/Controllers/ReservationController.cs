@@ -11,6 +11,7 @@ using HotelManagementService.Models;
 
 namespace HotelManagementService.Controllers
 {
+  [Authorize]
   public class ReservationController : Controller
   {
     private readonly HotelManagementContext db = new HotelManagementContext();
@@ -62,7 +63,7 @@ namespace HotelManagementService.Controllers
     {
       var selectList = elements.Select(element => new SelectListItem
       {
-        Value = element.Id.ToString(), Text = element.Name + element.Surname
+        Value = element.Id.ToString(), Text = element.Name + " " + element.Surname
       }).ToList();
       return selectList;
     }

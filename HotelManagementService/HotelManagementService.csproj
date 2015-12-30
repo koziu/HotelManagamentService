@@ -475,6 +475,7 @@
     <Content Include="Content\iCheck\square\yellow.css" />
     <Content Include="Content\iCheck\square\yellow.png" />
     <Content Include="Content\iCheck\square\_all.css" />
+    <Content Include="Content\signin\signin.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -512,6 +513,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="icon64x64.ico" />
     <Content Include="Scripts\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Scripts\bootstrap-slider\slider.css" />
     <Content Include="Scripts\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />

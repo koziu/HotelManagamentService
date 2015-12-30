@@ -9,7 +9,7 @@ using HotelManagementService.Models;
 
 namespace HotelManagementService.Controllers
 {
-  [Authorize]
+  [Authorize(Roles = "Administrator")]
   public class AccountController : Controller
   {
     public AccountController()
@@ -284,6 +284,7 @@ namespace HotelManagementService.Controllers
     // POST: /Account/LogOff
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [AllowAnonymous]
     public ActionResult LogOff()
     {
       AuthenticationManager.SignOut();

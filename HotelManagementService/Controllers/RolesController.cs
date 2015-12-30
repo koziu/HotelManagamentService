@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HotelManagementService.Controllers
 {
+  [Authorize(Roles = "Administrator, Manager")]
   public class RolesController : Controller
   {
     private readonly ApplicationDbContext _context = new ApplicationDbContext();
