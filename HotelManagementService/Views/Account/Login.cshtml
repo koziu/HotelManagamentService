@@ -22,6 +22,7 @@
     </head>
     <body>
         <div class="container" align="center">
+            <img src="~/icon64x64.ico" />
             @using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-signin", role = "form"}))
             {
                 @Html.AntiForgeryToken()

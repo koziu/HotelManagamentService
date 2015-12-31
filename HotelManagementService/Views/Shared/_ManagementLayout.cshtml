@@ -196,7 +196,7 @@
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
-                                <li class="user-body">
+                                @*<li class="user-body">
                                     <div class="col-xs-4 text-center">
                                         <a href="#">Followers</a>
                                     </div>
@@ -206,11 +206,11 @@
                                     <div class="col-xs-4 text-center">
                                         <a href="#">Friends</a>
                                     </div>
-                                </li>
+                                </li>*@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                        <a href="@Url.Action("Index")" class="btn btn-default btn-flat">Profil</a>
                                     </div>
                                     <div class="pull-right">
                                         @if (!Request.IsAuthenticated)
@@ -232,9 +232,9 @@
                         </li>
                         <!-- Control Sidebar Toggle Button -->
                         <li>
-                            <a href="#" data-toggle="control-sidebar">
+                            @*<a href="#" data-toggle="control-sidebar">
                                 <i class="fa fa-gears"></i>
-                            </a>
+                            </a>*@
                         </li>
                     </ul>
                 </div>
@@ -303,10 +303,13 @@
                     </li>*@
                     <li class="treeview">
 							<a href="#"><i class="fa fa-cogs"></i> <span>Ustawienia</span> <i class="fa fa-angle-left pull-right"></i></a>
-							<ul class="treeview-menu">
-								<li><a href="@Url.Action("Index", "Roles")" class="fa fa-lock">  Zarządzaj rolami</a></li>
-								@*<li><a href="#">Link in level 2</a></li>*@
-							</ul>
+                        <ul class="treeview-menu">
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <li><a href="@Url.Action("Index", "Roles")" class="fa fa-lock">  Zarządzaj rolami</a></li>
+                            }
+                            @*<li><a href="#">Link in level 2</a></li>*@
+                        </ul>
 						</li>
                 </ul><!-- /.sidebar-menu -->
             </section>
@@ -325,10 +328,10 @@
         <footer class="main-footer">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
-                Anything you want
+                Politechnika Opolska 2015
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
+            @*<strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.*@
         </footer>
 
         <!-- Control Sidebar -->

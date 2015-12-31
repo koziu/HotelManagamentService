@@ -9,7 +9,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title fa fa-lock"> | <b>Utwórz rolę</b></h3>
+                    <h3 class="box-title fa fa-lock"> | <b>Edytuj rolę</b></h3>
                     <hr />
                     @Html.ActionLink("Utwórz nową rolę", "Create", null, new {@class = "btn btn-danger", style = "margin-right:10px;"})  @Html.ActionLink("Zarządzaj rolami", "ManageUserRoles", null, new {@class = "btn btn-danger", style = "margin-right:10px;"})
                     <hr />
@@ -24,7 +24,7 @@
                             <h4><b>Nazwa roli</b></h4>
                         </div>
                         <p>
-                            @Html.TextBoxFor(model => model.Name)
+                            @Html.TextBoxFor(model => model.Name,null,new { placeholder = "Nazwa roli" })
                         </p>
                         <input type="submit" value="Zapisz" class="btn btn-danger" />
                         @Html.ActionLink("Powrót", "Index", null, new {@class = "btn btn-default"})

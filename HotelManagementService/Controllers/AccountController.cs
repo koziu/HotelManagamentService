@@ -50,7 +50,7 @@ namespace HotelManagementService.Controllers
         }
         else
         {
-          ModelState.AddModelError("", "Invalid username or password.");
+          ModelState.AddModelError("", "Nieprawidłowa nazwa użytkownika lub hasło");
         }
       }
 

@@ -58,7 +58,7 @@ namespace HotelManagementService.Models
 
     [DataType(DataType.Password)]
     [Display(Name = "Powtórz hasło")]
-    [Compare("NewPassword", ErrorMessage = "Hasła nie pasują do siebie.")]
+    [Compare("Password", ErrorMessage = "Hasła nie pasują do siebie.")]
     public string ConfirmPassword { get; set; }
   }
 }

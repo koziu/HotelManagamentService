@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using HotelManagementService.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -115,11 +116,13 @@ namespace HotelManagementService.Controllers
         ApplicationUser user = _context.Users.FirstOrDefault(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase));
         var account = new AccountController();
 
-        ViewBag.RolesForThisUser = account.UserManager.GetRoles(user.Id);
-
         // prepopulat roles for the view dropdown
         var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
         ViewBag.Roles = list;
+        if (user != null)
+        {
+          ViewBag.RolesForThisUser = account.UserManager.GetRoles(user.Id) ?? null ;
+        }
       }
 
       return View("ManageUserRoles");
