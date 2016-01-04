@@ -8,21 +8,17 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title fa fa-lock"> | <b>Lista roli</b></h3>
+                    <h3 class="box-title fa fa-lock"> | <b>Lista uprawnień</b></h3>
                     <hr/>
-                    @Html.ActionLink("Utwórz nową rolę", "Create", null, new { @class = "btn btn-danger", style = "margin-right: 10px;" })  @Html.ActionLink("Zarządzaj rolami", "ManageUserRoles", null, new { @class = "btn btn-danger", style = "margin-right: 10px;" })
-                    <hr />
                 </div>
                 <div class="box-body">
                     @foreach (IdentityRole role in Model)
                     {
-                        <div class="col-md-3">
+                        <div>
                             <h5>
-                                @role.Name
+                                <b>@role.Name</b>
+                                @Html.ActionLink("Wyświetl użytkowników", "GetUsersForRole", new { roleName = @role.Name }, new { @class = "btn btn-danger", style = "margin-left: 20px;" })
                             </h5>
-                                <span onclick=" return confirm('Na pewno chcesz usunąć??') "><a href="/Roles/Delete?RoleName=@role.Name" class="btn btn-danger" style="margin-right: 5px;">Delete</a></span>
-                                @Html.ActionLink("Edytuj", "Edit", new { roleName = @role.Name }, new { @class = "btn btn-default", style = "margin-right: 10px;" })
-                            
                         </div>
                     }
                 </div>

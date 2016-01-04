@@ -1,0 +1,102 @@
+﻿@model HotelManagementService.ViewModels.RoleUsersViewModel
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title fa fa-user"> | <b>Lista użytkowników</b></h3>
+                    <hr />
+                    @using (Html.BeginForm("RoleAddToUser", "Roles"))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        @Html.DropDownList("UserName", (IEnumerable<SelectListItem>) ViewBag.Users, "--Wybierz użytkownika--", new {@class = "chosen-select"})
+                        @Html.TextBox("RoleName", Model.RoleName, new {style = "display:none"})
+
+                        <input type="submit" value="Dodaj" class="btn btn-danger" />
+                    }
+                    <hr/>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <table id="tableConf" class="display table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Nazwa użytkownika")
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (string str in Model.UserNameList)
+                            {
+                                <tr>
+                                  
+                                        
+                                    <td>
+                                        @Html.DisplayFor(m => str)
+                                    </td>
+                                    <td>
+                                        @using (Html.BeginForm("DeleteRoleForUser", "Roles"))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary(true)
+
+                                            @Html.TextBox("UserName", str, new {style = "display:none"})
+                                            @Html.TextBox("RoleName", Model.RoleName, new {style = "display:none"})
+
+                                            <input type="submit" value="Usuń" class="btn btn-danger" />
+                                        }
+                                    </td>
+                                        
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Nazwa użytkownika")
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div>
+                        @Html.ActionLink("Powrót", "Index", null, new {@class = "btn btn-default"})
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jquery.dataTables")
+    @Scripts.Render("~/bundles/bootstrap");
+    @Styles.Render("~/Content/css"));
+    <script>
+
+        $(document).ready(function() {
+            $(function() {
+                $('.datepicker').datepicker();
+            });
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, nic nie znaleziono!' },
+                '.chosen-select-width': { width: "95%" }
+            };
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+        });
+    </script>
+}

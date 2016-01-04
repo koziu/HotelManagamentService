@@ -188,6 +188,7 @@
     <Compile Include="Models\RoomModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\RoleUsersViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -1647,10 +1648,6 @@
     <Content Include="Views\Reservation\Details.cshtml" />
     <Content Include="Views\Reservation\Edit.cshtml" />
     <Content Include="Views\Reservation\Index.cshtml" />
-    <Content Include="Views\Role\Create.cshtml" />
-    <Content Include="Views\Role\Edit.cshtml" />
-    <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\Role\ManageUserRoles.cshtml" />
     <Content Include="Views\Room\Create.cshtml" />
     <Content Include="Views\Room\Delete.cshtml" />
     <Content Include="Views\Room\Details.cshtml" />
@@ -1663,6 +1660,7 @@
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <None Include="Views\Roles\Create.cshtml" />
     <None Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\GetUsersForRole.cshtml" />
     <None Include="Views\Roles\Index.cshtml" />
     <None Include="Views\Roles\ManageUserRoles.cshtml" />
   </ItemGroup>

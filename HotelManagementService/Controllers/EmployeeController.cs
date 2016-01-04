@@ -7,20 +7,20 @@ using HotelManagementService.DAL.Context;
 using HotelManagementService.Models;
 
 namespace HotelManagementService.Controllers
-{       
+{
   public class EmployeeController : Controller
   {
     private readonly HotelManagementContext db = new HotelManagementContext();
 
     // GET: Employee
-    [Authorize]
+    [Authorize(Roles = "Administrator, Employee")]
     public async Task<ActionResult> Index()
     {
       return View(await db.EmployeeModels.ToListAsync());
     }
 
     // GET: Employee/Details/5
-    [Authorize]
+    [Authorize(Roles = "Administrator, Employee")]
     public async Task<ActionResult> Details(Guid id)
     {
       if (id == null)

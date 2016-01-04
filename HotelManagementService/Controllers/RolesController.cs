@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using HotelManagementService.Models;
+using HotelManagementService.ViewModels;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -26,68 +30,83 @@ namespace HotelManagementService.Controllers
       return View(roles);
     }
 
-    public ActionResult Delete(string RoleName)
-    {
-      var thisRole = _context.Roles.FirstOrDefault(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase));
-      _context.Roles.Remove(thisRole);
-      _context.SaveChanges();
-      return RedirectToAction("Index");
-    }
+    //public ActionResult Delete(string RoleName)
+    //{
+    //  var thisRole = _context.Roles.FirstOrDefault(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase));
+    //  _context.Roles.Remove(thisRole);
+    //  _context.SaveChanges();
+    //  return RedirectToAction("Index");
+    //}
 
    
-    // GET: /Roles/Create
-    public ActionResult Create()
+    //// GET: /Roles/Create
+    //public ActionResult Create()
+    //{
+    //  return View();
+    //}
+
+    ////
+    //// POST: /Roles/Create
+    //[HttpPost]
+    //public ActionResult Create(FormCollection collection)
+    //{
+    //  try
+    //  {
+    //    _context.Roles.Add(new IdentityRole
+    //    {
+    //      Name = collection["RoleName"]
+    //    });
+    //    _context.SaveChanges();
+    //    ViewBag.ResultMessage = "Role created successfully !";
+    //    return RedirectToAction("Index");
+    //  }
+    //  catch
+    //  {
+    //    return View();
+    //  }
+    //}
+
+    ////
+    //// GET: /Roles/Edit/5
+    //public ActionResult Edit(string roleName)
+    //{
+    //  var thisRole = _context.Roles.FirstOrDefault(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase));
+
+    //  return View(thisRole);
+    //}
+
+    ////
+    //// POST: /Roles/Edit/5
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public ActionResult Edit(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
+    //{
+    //  try
+    //  {
+    //    _context.Entry(role).State = System.Data.Entity.EntityState.Modified;
+    //    _context.SaveChanges();
+
+    //    return RedirectToAction("Index");
+    //  }
+    //  catch
+    //  {
+    //    return View();
+    //  }
+    //}
+
+    public ActionResult GetUsersForRole(string roleName)
     {
-      return View();
-    }
-
-    //
-    // POST: /Roles/Create
-    [HttpPost]
-    public ActionResult Create(FormCollection collection)
-    {
-      try
+      var user = _context.Database.SqlQuery<string>("select u.UserName from dbo.AspNetUsers u join dbo.AspNetUserRoles ur on u.Id = ur.UserId join dbo.AspNetRoles r on r.Id = ur.RoleId where r.name = @p0",roleName).ToList();
+      var roleUsers = new RoleUsersViewModel
       {
-        _context.Roles.Add(new IdentityRole
-        {
-          Name = collection["RoleName"]
-        });
-        _context.SaveChanges();
-        ViewBag.ResultMessage = "Role created successfully !";
-        return RedirectToAction("Index");
-      }
-      catch
-      {
-        return View();
-      }
-    }
+        RoleName = roleName,
+        UserNameList = user
+      };
+      var list = _context.Users.OrderBy(r => r.UserName).ToList().Select(rr => new SelectListItem { Value = rr.UserName.ToString(), Text = rr.UserName }).ToList();
+      ViewBag.Users = list;
 
-    //
-    // GET: /Roles/Edit/5
-    public ActionResult Edit(string roleName)
-    {
-      var thisRole = _context.Roles.FirstOrDefault(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase));
 
-      return View(thisRole);
-    }
-
-    //
-    // POST: /Roles/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
-    {
-      try
-      {
-        _context.Entry(role).State = System.Data.Entity.EntityState.Modified;
-        _context.SaveChanges();
-
-        return RedirectToAction("Index");
-      }
-      catch
-      {
-        return View();
-      }
+      return View(roleUsers);
     }
 
     [HttpPost]
@@ -105,28 +124,9 @@ namespace HotelManagementService.Controllers
       var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
       ViewBag.Roles = list;
 
-      return View("ManageUserRoles");
+      return RedirectToAction("GetUsersForRole", "Roles", new { roleName = RoleName });
     }
 
-    [ValidateAntiForgeryToken]
-    public ActionResult GetRoles(string UserName)
-    {
-      if (!string.IsNullOrWhiteSpace(UserName))
-      {
-        ApplicationUser user = _context.Users.FirstOrDefault(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase));
-        var account = new AccountController();
-
-        // prepopulat roles for the view dropdown
-        var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-        ViewBag.Roles = list;
-        if (user != null)
-        {
-          ViewBag.RolesForThisUser = account.UserManager.GetRoles(user.Id) ?? null ;
-        }
-      }
-
-      return View("ManageUserRoles");
-    }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -148,7 +148,7 @@ namespace HotelManagementService.Controllers
       var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
       ViewBag.Roles = list;
 
-      return View("ManageUserRoles");
+      return RedirectToAction("GetUsersForRole", "Roles",new { roleName = RoleName});
     }
   }
 }
