@@ -7,13 +7,12 @@ namespace HotelManagementService.Enums
 {
   public enum ReservationStates
   {
-    Unconfirmed,
-    Confirmed,
-    Canceled,
-    Arrival,
-    Stay,
-    Depature,
-    NoShow,
-    Closed
+    Niepotwierdzona,
+    Zatwierdzona,
+    Odwołana,
+    Przyjazd,
+    Pobyt,
+    Wyjazd,
+    Zamknięta
   }
 }

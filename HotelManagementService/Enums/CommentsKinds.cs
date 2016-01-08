@@ -7,8 +7,8 @@ namespace HotelManagementService.Enums
 {
   public enum CommentsKinds
   {
-    Child,
-    RegularCustomer,
-    UnwantedClient
+    Dziecko,
+    StałyKlient,
+    NowyKlient
   }
 }

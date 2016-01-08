@@ -1,4 +1,5 @@
-﻿$(document).ready(function() {
+﻿$(document).ready(function () {
+
     var tableLenght = $('#tableConf thead th').length;
     var table = $('#tableConf').DataTable( {
         "columnDefs": [

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using HotelManagementService.DAL.Context;
@@ -19,8 +18,8 @@ namespace HotelManagementService.Controllers
     // GET: ReservationModels
     public async Task<ActionResult> Index()
     {
-      IQueryable<ReservationModels> reservationModelses = db.ReservationModelses.Include(r => r.Events);
-      return View(await reservationModelses.ToListAsync());
+      IQueryable<Event> eventsModel = db.Events.Select(x => x);
+      return View(await eventsModel.ToListAsync());
     }
 
     // GET: ReservationModels/Details/5
@@ -176,6 +175,8 @@ namespace HotelManagementService.Controllers
       await db.SaveChangesAsync();
       return RedirectToAction("Index");
     }
+
+
 
     protected override void Dispose(bool disposing)
     {

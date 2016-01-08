@@ -1,0 +1,76 @@
+﻿@model System.Data.Entity.Infrastructure.DbRawSqlQuery<HotelManagementService.ViewModels.EventViewModel>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title fa fa-calendar"> | <b>Rezerwacje klienta</b></h3>
+                        <hr />
+                        <hr />
+                        <div class="box-body ">
+                            <table id="tableConf" class="display table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Data przyjazdu")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Data wyjazdu")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Cena")
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ReservationState)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ArriveDate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DepatureDate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Price)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Data przyjazdu")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Data wyjazdu")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Cena")
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div>
+                                @Html.ActionLink("Powrót", "Index", null, new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @section scripts{
+        @Scripts.Render("~/bundles/jquery.dataTables")
+    }

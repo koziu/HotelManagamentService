@@ -33,8 +33,9 @@ namespace HotelManagementService.Models
     public DateTime ArriveDate { get; set; }
 
     [Display(Name = "Data wyjazdu")]
+    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
     [Required(ErrorMessage = "Musisz podać datę wyjazdu")]
-    [DataType(DataType.DateTime)]
+    [DataType(DataType.Date)]
     public DateTime DepatureDate { get; set; }
 
     public virtual ReservationModels Reservation { get; set; }

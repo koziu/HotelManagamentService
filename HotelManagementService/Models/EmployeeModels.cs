@@ -36,6 +36,7 @@ namespace HotelManagementService.Models
 
     [Display(Name = "Data urodzenia")]
     [Required(ErrorMessage = "Musisz podać date urodzenia")]
+    [DataType(DataType.Date)]
     public DateTime BrithDay { get; set; }
 
     [Display(Name = "Miejsce urodzenia")]

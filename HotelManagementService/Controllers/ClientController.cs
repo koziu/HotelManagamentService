@@ -9,13 +9,17 @@ using System.Web;
 using System.Web.Mvc;
 using HotelManagementService.DAL.Context;
 using HotelManagementService.Models;
+using HotelManagementService.ViewModels;
 
 namespace HotelManagementService.Controllers
 {
     [Authorize(Roles = "Employee, Administrator")]
     public class ClientController : Controller
     {
-        private HotelManagementContext db = new HotelManagementContext();
+      private const string GetEventsByClientIdQueryText =
+        @"SELECT e.Price, e.ReservationState, e.ArriveDate, e.DepatureDate FROM dbo.Events e join dbo.Reservation r on r.Id = e.Reservation_Id where r.ClientId = @p0";
+
+      private HotelManagementContext db = new HotelManagementContext();
 
         // GET: ClientModels
         public async Task<ActionResult> Index()
@@ -117,6 +121,13 @@ namespace HotelManagementService.Controllers
             db.ClientModels.Remove(clientModels);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+        [HttpGet, ActionName("ClientReservation")]
+        public async Task<ActionResult> GetEventsByClientId(Guid? id)
+        {
+          var events = db.Database.SqlQuery<EventViewModel>(GetEventsByClientIdQueryText, id);
+
+          return View(events);
         }
 
         protected override void Dispose(bool disposing)

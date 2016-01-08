@@ -15,6 +15,8 @@ namespace HotelManagementService.Controllers
   [Authorize(Roles = "Administrator, Manager")]
   public class RolesController : Controller
   {
+    private const string GetUsersForRoleQueryText =
+      @"select u.UserName from dbo.AspNetUsers u join dbo.AspNetUserRoles ur on u.Id = ur.UserId join dbo.AspNetRoles r on r.Id = ur.RoleId where r.name = @p0";
     private readonly ApplicationDbContext _context = new ApplicationDbContext();
 
     public ActionResult ManageUserRoles()
@@ -96,7 +98,7 @@ namespace HotelManagementService.Controllers
 
     public ActionResult GetUsersForRole(string roleName)
     {
-      var user = _context.Database.SqlQuery<string>("select u.UserName from dbo.AspNetUsers u join dbo.AspNetUserRoles ur on u.Id = ur.UserId join dbo.AspNetRoles r on r.Id = ur.RoleId where r.name = @p0",roleName).ToList();
+      var user = _context.Database.SqlQuery<string>(GetUsersForRoleQueryText, roleName).ToList();
       var roleUsers = new RoleUsersViewModel
       {
         RoleName = roleName,

@@ -7,10 +7,10 @@ namespace HotelManagementService.Enums
 {
   public enum RoomStates
   {
-    Busy,
-    Reserved,
-    Free,
-    Renovation,
-    Failure
+    Zajęty,
+    Zarezerowany,
+    Wolny,
+    Remont,
+    Awaria
   }
 }
