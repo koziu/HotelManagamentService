@@ -3,8 +3,10 @@ using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using HotelManagementService.Attribute;
 using HotelManagementService.DAL.Context;
 using HotelManagementService.Models;
+using HotelManagementService.ViewModels;
 
 namespace HotelManagementService.Controllers
 {
@@ -13,14 +15,14 @@ namespace HotelManagementService.Controllers
     private readonly HotelManagementContext db = new HotelManagementContext();
 
     // GET: Employee
-    [Authorize(Roles = "Administrator, Employee")]
+    [NonAuthorize(Roles = "Administrator, Employee")]
     public async Task<ActionResult> Index()
     {
       return View(await db.EmployeeModels.ToListAsync());
     }
 
     // GET: Employee/Details/5
-    [Authorize(Roles = "Administrator, Employee")]
+    [NonAuthorize(Roles = "Administrator, Employee")]
     public async Task<ActionResult> Details(Guid id)
     {
       if (id == null)
@@ -37,34 +39,27 @@ namespace HotelManagementService.Controllers
 
 
     // GET: Employee/Create
-    [Authorize(Roles = "Administrator")]
+    [NonAuthorize(Roles = "Administrator")]
     public ActionResult Create()
     {
       return View();
     }
 
-    // POST: Employee/Create
-    // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-    // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+     //POST: Employee/Create
+     //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+     //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Administrator")]
+    [NonAuthorize(Roles = "Administrator")]
     public async Task<ActionResult> Create(
-      [Bind(Include = "Id,Name,Surname,Address,DeliveriesAddress,Email,PhoneNumber,BrithDay,BrithPlace,TaxId")] EmployeeModels employeeModels)
+      [Bind(Include = "UserName, Password, ConfirmPassword,Employee")] RegisterViewModel registerViewModel)
     {
-      if (ModelState.IsValid)
-      {
-        employeeModels.Id = Guid.NewGuid();
-        db.EmployeeModels.Add(employeeModels);
-        await db.SaveChangesAsync();
-        return RedirectToAction("Index");
-      }
 
-      return View(employeeModels);
+      return RedirectToAction("Register", "Account", new { employeeModels = registerViewModel });
     }
 
-    [Authorize(Roles = "Administrator")]
+    [NonAuthorize(Roles = "Administrator")]
     // GET: Employee/Edit/5
     public async Task<ActionResult> Edit(Guid id)
     {
@@ -72,34 +67,35 @@ namespace HotelManagementService.Controllers
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      var employeeModels = await db.EmployeeModels.FindAsync(id);
-      if (employeeModels == null)
+      RegisterViewModel registerViewModel = new RegisterViewModel();
+      registerViewModel.Employee  = await db.EmployeeModels.FindAsync(id);
+      if (registerViewModel.Employee == null)
       {
         return HttpNotFound();
       }
-      return View(employeeModels);
+      return View(registerViewModel);
     }
 
     // POST: Employee/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [Authorize(Roles = "Administrator")]
+    [NonAuthorize(Roles = "Administrator")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Edit(
-      [Bind(Include = "Id,Name,Surname,Address,DeliveriesAddress,Email,PhoneNumber,BrithDay,BrithPlace,TaxId")] EmployeeModels employeeModels)
+      [Bind(Include = "UserName, Password, ConfirmPassword,Employee")] RegisterViewModel registerViewModel)
     {
       if (ModelState.IsValid)
       {
-        db.Entry(employeeModels).State = EntityState.Modified;
+        db.Entry(registerViewModel.Employee).State = EntityState.Modified;
         await db.SaveChangesAsync();
         return RedirectToAction("Index");
       }
-      return View(employeeModels);
+      return View(registerViewModel);
     }
 
     // GET: Employee/Delete/5
-    [Authorize(Roles = "Administrator")]
+    [NonAuthorize(Roles = "Administrator")]
     public async Task<ActionResult> Delete(Guid id)
     {
       if (id == null)
@@ -115,7 +111,7 @@ namespace HotelManagementService.Controllers
     }
 
     // POST: Employee/Delete/5
-    [Authorize(Roles = "Administrator")]
+    [NonAuthorize(Roles = "Administrator")]
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> DeleteConfirmed(Guid id)

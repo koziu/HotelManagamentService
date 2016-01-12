@@ -6,7 +6,7 @@
                     <div class="box-header">
                         <h3 class="box-title fa fa-odnoklassniki"> | <b>Pracownicy</b></h3>
                         <hr />
-                        <p>@Html.ActionLink("Dodaj nowego pracownika", "Create", null, new { @class = "btn btn-danger", @align = "left" })</p>
+                        <p>@Html.ActionLink("Dodaj nowego pracownika", "Register","Account", null, new { @class = "btn btn-danger", @align = "left" })</p>
                         <hr />
                     </div><!-- /.box-header -->
                     <div class="box-body">
@@ -27,6 +27,9 @@
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.PhoneNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Position)
                                     </th>
                                     <th>
                                     </th>
@@ -52,6 +55,9 @@
                                             @Html.DisplayFor(modelItem => item.PhoneNumber)
                                         </td>
                                         <td>
+                                            @Html.DisplayFor(modelItem => item.Position)
+                                        </td>
+                                        <td>
                                             @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) |
                                             @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
                                             @Html.ActionLink("Usuń", "Delete", new { id = item.Id })
@@ -75,6 +81,9 @@
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.PhoneNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Position)
                                     </th>
                                     <th>
                                     </th>

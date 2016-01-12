@@ -2,7 +2,7 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="box" style="width: 80%">
                 <div class="box-header">
                     <h3 class="box-title fa fa-calendar"> | <b>Dodaj nową rezerwację</b></h3>
                     <hr/>
@@ -33,7 +33,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Event.ArriveDate, new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Event.ArriveDate, new { @class = "form-control datepicker", data_provide = "datepicker", @placeholder = "Enter Drop-off date here..." })
+                                    @Html.EditorFor(model => model.Event.ArriveDate, new { @class = "form-control datepicker"})
                                     @Html.ValidationMessageFor(model => model.Event.ArriveDate, "", new { @class = "text-danger", })
                                 </div>
                             </div>
@@ -73,24 +73,5 @@
 @section scripts{
     @Scripts.Render("~/bundles/bootstrap");
     @Styles.Render("~/Content/css"));
-    <script>
-    
-        $(document).ready(function() {
-            $(function () {
-                $('.datepicker').datepicker();
-            });
-            var config = {
-                '.chosen-select': {},
-                '.chosen-select-deselect': { allow_single_deselect: true },
-                '.chosen-select-no-single': { disable_search_threshold: 10 },
-                '.chosen-select-no-results': { no_results_text: 'Oops, nic nie znaleziono!' },
-                '.chosen-select-width': { width: "95%" }
-            }
-            for (var selector in config) {
-                $(selector).chosen(config[selector]);
-            }
-
-
-        });
-    </script>
+   
 }

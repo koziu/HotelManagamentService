@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
+using HotelManagementService.Enums;
 
 namespace HotelManagementService.Models
 {
@@ -27,7 +29,6 @@ namespace HotelManagementService.Models
     public string DeliveriesAddress { get; set; }
 
     [Display(Name = "Adres e-mail")]
-
     public string Email { get; set; }
 
     [Display(Name = "Numer telefonu")]
@@ -43,8 +44,14 @@ namespace HotelManagementService.Models
     [Required(ErrorMessage = "Musisz podać miejsce urodzenia")]
     public string BrithPlace { get; set; }
 
+    [Display(Name = "Stanowisko")]
+    public Positions Position { get; set; }
+
     [Display(Name = "PESEL")]
     [Required(ErrorMessage = "Musisz podać PESEL")]
     public string TaxId { get; set; }
+
+    [ScaffoldColumn(false)]
+    public Guid UserId { get; set; }
   }
 }
