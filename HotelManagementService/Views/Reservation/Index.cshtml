@@ -3,106 +3,105 @@
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box" style="width: max-content">
-                <div class="box-header">
-                    <h3 class="box-title fa fa-calendar"> | <b>Rezerwacje klientów</b></h3>
-                    <hr/>
-                    <p>@Html.ActionLink("Utwórz rezerwacje dla nowego klienta", "Create", null, new { @class = "btn btn-danger" })</p>
-                    <hr/>
-                    <div class="box-body ">
-                        <table id="tableConf" class="display table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Room.RoomName)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ReservationState)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ArriveDate)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DepatureDate)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Price)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Reservation.Client.Name)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Reservation.Client.Surname)
-                                    </th>
-                                    <th style="visibility: hidden">
-                                       
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
+          <div class="box" style="width: -moz-max-content;width: -webkit-max-content;width: max-content;">
+            <div class="box-header">
+              <h3 class="box-title fa fa-calendar"> | <b>Rezerwacje klientów</b></h3>
+              <hr />
+              <p>@Html.ActionLink("Utwórz rezerwacje dla nowego klienta", "Create", null, new { @class = "btn btn-danger" })</p>
+              <hr />
+              <div class="box-body ">
+                <table id="tableConf" class="display table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>
+                        @Html.DisplayNameFor(model => model.Room.RoomName)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.ReservationState)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.ArriveDate)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.DepatureDate)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.Reservation.Client.Name)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.Reservation.Client.Surname)
+                      </th>
+                      <th style="visibility: hidden">
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Room.RoomName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ReservationState)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ArriveDate)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DepatureDate)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Price)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Reservation.Client.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Reservation.Client.Surname)
-                                        </td>
-                                        <td style="visibility: hidden">
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach (var item in Model)
+                    {
+                      <tr>
 
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Room.RoomName)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ReservationState)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ArriveDate)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.DepatureDate)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Price)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Reservation.Client.Name)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Reservation.Client.Surname)
-                                    </th>
-                                    <th style="visibility: hidden">
+                        <td>
+                          @Html.DisplayFor(modelItem => item.Room.RoomName)
+                        </td>
+                        <td>
+                          @Html.DisplayFor(modelItem => item.ReservationState)
+                        </td>
+                        <td>
+                          @Html.DisplayFor(modelItem => item.ArriveDate)
+                        </td>
+                        <td>
+                          @Html.DisplayFor(modelItem => item.DepatureDate)
+                        </td>
+                        <td>
+                          @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                          @Html.DisplayFor(modelItem => item.Reservation.Client.Name)
+                        </td>
+                        <td>
+                          @Html.DisplayFor(modelItem => item.Reservation.Client.Surname)
+                        </td>
+                        <td style="visibility: hidden"></td>
+                      </tr>
+                    }
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>
+                        @Html.DisplayNameFor(model => model.Room.RoomName)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.ReservationState)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.ArriveDate)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.DepatureDate)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.Reservation.Client.Name)
+                      </th>
+                      <th>
+                        @Html.DisplayNameFor(model => model.Reservation.Client.Surname)
+                      </th>
+                      <th style="visibility: hidden">
 
-                                    </th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
+                      </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </div>
+          </div>
+
         </div>
     </div>
 </section>

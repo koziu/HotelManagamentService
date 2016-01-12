@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HotelManagementService.Attribute;
@@ -11,7 +12,7 @@ using HotelManagementService.Models;
 
 namespace HotelManagementService.Controllers
 {
-  [NonAuthorize(Roles = "Administrator")]
+  [HotelManagamentAuthorize(Roles = "Administrator")]
   public class AccountController : Controller
   {
     HotelManagementContext _context = new HotelManagementContext();
@@ -63,7 +64,7 @@ namespace HotelManagementService.Controllers
 
     //
     // GET: /Account/Register
-    [NonAuthorize(Roles = "Administrator")]   
+    [HotelManagamentAuthorize(Roles = "Administrator")]   
     public ActionResult Register()
     {
       return View();
@@ -72,7 +73,7 @@ namespace HotelManagementService.Controllers
     //
     // POST: /Account/Register
     [HttpPost]
-    [NonAuthorize(Roles = "Administrator")]   
+    [HotelManagamentAuthorize(Roles = "Administrator")]   
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Register(RegisterViewModel model)
     {
@@ -82,6 +83,8 @@ namespace HotelManagementService.Controllers
         var result = await UserManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
+          model.Employee.UserId = user.Id;
+          model.Employee.Id = Guid.NewGuid();
           _context.EmployeeModels.Add(model.Employee);
           await _context.SaveChangesAsync();
           await SignInAsync(user, isPersistent: false);

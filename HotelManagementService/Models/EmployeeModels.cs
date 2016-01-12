@@ -52,6 +52,6 @@ namespace HotelManagementService.Models
     public string TaxId { get; set; }
 
     [ScaffoldColumn(false)]
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
   }
 }

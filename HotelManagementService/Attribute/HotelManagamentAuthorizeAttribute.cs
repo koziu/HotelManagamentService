@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace HotelManagementService.Attribute
 {
-  public class NonAuthorizeAttribute : AuthorizeAttribute
+  public class HotelManagamentAuthorizeAttribute : AuthorizeAttribute
   {
     protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
     {

@@ -160,7 +160,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Attribute\NonAuthorizeAttribute.cs" />
+    <Compile Include="Attribute\HotelManagamentAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -178,13 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201601110720250_UserIdInEmployeeModel.cs" />
-    <Compile Include="Migrations\201601110720250_UserIdInEmployeeModel.Designer.cs">
-      <DependentUpon>201601110720250_UserIdInEmployeeModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601121335507_EmployeChanges.cs" />
-    <Compile Include="Migrations\201601121335507_EmployeChanges.Designer.cs">
-      <DependentUpon>201601121335507_EmployeChanges.cs</DependentUpon>
+    <Compile Include="Migrations\201601122158495_EmployeeUserId.cs" />
+    <Compile Include="Migrations\201601122158495_EmployeeUserId.Designer.cs">
+      <DependentUpon>201601122158495_EmployeeUserId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1687,11 +1683,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601110720250_UserIdInEmployeeModel.resx">
-      <DependentUpon>201601110720250_UserIdInEmployeeModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601121335507_EmployeChanges.resx">
-      <DependentUpon>201601121335507_EmployeChanges.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601122158495_EmployeeUserId.resx">
+      <DependentUpon>201601122158495_EmployeeUserId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

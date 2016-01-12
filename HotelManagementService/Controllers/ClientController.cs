@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using HotelManagementService.Attribute;
 using HotelManagementService.DAL.Context;
 using HotelManagementService.Models;
 using HotelManagementService.ViewModels;
 
 namespace HotelManagementService.Controllers
 {
-    [Authorize(Roles = "Employee, Administrator")]
+    [HotelManagamentAuthorize(Roles = "Employee, Administrator")]
     public class ClientController : Controller
     {
       private const string GetEventsByClientIdQueryText =

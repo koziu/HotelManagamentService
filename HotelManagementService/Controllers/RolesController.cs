@@ -13,7 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HotelManagementService.Controllers
 {
-  [NonAuthorize(Roles = "Administrator, Manager")]
+  [HotelManagamentAuthorize(Roles = "Administrator, Manager")]
   public class RolesController : Controller
   {
     private const string GetUsersForRoleQueryText =
