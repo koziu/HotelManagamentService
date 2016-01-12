@@ -60,5 +60,7 @@ namespace HotelManagementService.Models
     [Display(Name = "Powtórz hasło")]
     [Compare("Password", ErrorMessage = "Hasła nie pasują do siebie.")]
     public string ConfirmPassword { get; set; }
+
+    public EmployeeModels Employee { get; set; }
   }
 }

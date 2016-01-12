@@ -3,11 +3,13 @@ using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using HotelManagementService.Attribute;
 using HotelManagementService.DAL.Context;
 using HotelManagementService.Models;
 
 namespace HotelManagementService.Controllers
 {
+  [NonAuthorize(Roles = "Administrator, Manager, Employee")]
   public class RoomController : Controller
   {
     private readonly HotelManagementContext db = new HotelManagementContext();
@@ -36,7 +38,7 @@ namespace HotelManagementService.Controllers
     }
 
     // GET: RoomModels/Create
-    [Authorize(Roles = "Administrator, Manager")]
+    [NonAuthorize(Roles = "Administrator, Manager")]
     public ActionResult Create()
     {
       return View();
@@ -47,7 +49,7 @@ namespace HotelManagementService.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Administrator, Manager")]
+    [NonAuthorize(Roles = "Administrator, Manager")]
     public async Task<ActionResult> Create(
       [Bind(
         Include =
@@ -66,7 +68,7 @@ namespace HotelManagementService.Controllers
     }
 
     // GET: RoomModels/Edit/5
-    [Authorize(Roles = "Administrator, Manager")]
+    [NonAuthorize(Roles = "Administrator, Manager")]
     public async Task<ActionResult> Edit(Guid? id)
     {
       if (id == null)
@@ -86,7 +88,7 @@ namespace HotelManagementService.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Administrator, Manager")]
+    [NonAuthorize(Roles = "Administrator, Manager")]
     public async Task<ActionResult> Edit(
       [Bind(
         Include =
@@ -103,7 +105,7 @@ namespace HotelManagementService.Controllers
     }
 
     // GET: RoomModels/Delete/5
-    [Authorize(Roles = "Administrator, Manager")]
+    [NonAuthorize(Roles = "Administrator, Manager")]
     public async Task<ActionResult> Delete(Guid? id)
     {
       if (id == null)
@@ -121,7 +123,7 @@ namespace HotelManagementService.Controllers
     // POST: RoomModels/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "Administrator, Manager")]
+    [NonAuthorize(Roles = "Administrator, Manager")]
     public async Task<ActionResult> DeleteConfirmed(Guid id)
     {
       RoomModels roomModels = await db.RoomModels.FindAsync(id);

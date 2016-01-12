@@ -1,5 +1,3 @@
-using HotelManagementService.Models;
-
 namespace HotelManagementService.Migrations
 {
     using System;
@@ -7,14 +5,14 @@ namespace HotelManagementService.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<HotelManagementService.DAL.Context.HotelManagementContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(HotelManagementService.DAL.Context.HotelManagementContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -160,6 +160,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Attribute\NonAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -171,10 +172,19 @@
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="DAL\Context\HotelManagementContext.cs" />
     <Compile Include="Enums\CommentsKinds.cs" />
+    <Compile Include="Enums\Positions.cs" />
     <Compile Include="Enums\ReservationStates.cs" />
     <Compile Include="Enums\RoomStates.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601110720250_UserIdInEmployeeModel.cs" />
+    <Compile Include="Migrations\201601110720250_UserIdInEmployeeModel.Designer.cs">
+      <DependentUpon>201601110720250_UserIdInEmployeeModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601121335507_EmployeChanges.cs" />
+    <Compile Include="Migrations\201601121335507_EmployeChanges.Designer.cs">
+      <DependentUpon>201601121335507_EmployeChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1661,6 +1671,7 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <Content Include="Views\Client\ClientReservation.cshtml" />
+    <Content Include="Views\Account\NoAuthorize.cshtml" />
     <None Include="Views\Roles\Create.cshtml" />
     <None Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\GetUsersForRole.cshtml" />
@@ -1674,6 +1685,14 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201601110720250_UserIdInEmployeeModel.resx">
+      <DependentUpon>201601110720250_UserIdInEmployeeModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601121335507_EmployeChanges.resx">
+      <DependentUpon>201601121335507_EmployeChanges.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using HotelManagementService.Attribute;
+using HotelManagementService.DAL.Context;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -9,9 +11,10 @@ using HotelManagementService.Models;
 
 namespace HotelManagementService.Controllers
 {
-  [Authorize(Roles = "Administrator")]
+  [NonAuthorize(Roles = "Administrator")]
   public class AccountController : Controller
   {
+    HotelManagementContext _context = new HotelManagementContext();
     public AccountController()
       : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
     {
@@ -60,7 +63,7 @@ namespace HotelManagementService.Controllers
 
     //
     // GET: /Account/Register
-    [AllowAnonymous]
+    [NonAuthorize(Roles = "Administrator")]   
     public ActionResult Register()
     {
       return View();
@@ -69,7 +72,7 @@ namespace HotelManagementService.Controllers
     //
     // POST: /Account/Register
     [HttpPost]
-    [AllowAnonymous]
+    [NonAuthorize(Roles = "Administrator")]   
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Register(RegisterViewModel model)
     {
@@ -79,8 +82,10 @@ namespace HotelManagementService.Controllers
         var result = await UserManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
+          _context.EmployeeModels.Add(model.Employee);
+          await _context.SaveChangesAsync();
           await SignInAsync(user, isPersistent: false);
-          return RedirectToAction("Index", "Home");
+          return RedirectToAction("Index", "Employee");
         }
         else
         {

@@ -71,5 +71,6 @@ namespace HotelManagementService.Models
 
     [Display(Name= "Numer REGON")]
     public string REGON { get; set; }
+
   }
 }

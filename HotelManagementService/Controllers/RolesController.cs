@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
+using HotelManagementService.Attribute;
 using HotelManagementService.Models;
 using HotelManagementService.ViewModels;
 using Microsoft.Ajax.Utilities;
@@ -12,7 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HotelManagementService.Controllers
 {
-  [Authorize(Roles = "Administrator, Manager")]
+  [NonAuthorize(Roles = "Administrator, Manager")]
   public class RolesController : Controller
   {
     private const string GetUsersForRoleQueryText =
