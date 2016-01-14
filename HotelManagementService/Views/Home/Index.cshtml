@@ -1,26 +1,92 @@
-﻿@using System.Globalization
+﻿@model IEnumerable<HotelManagementService.ViewModels.RoomEventsViewModel>
+@using System.Globalization
 @using System.Web.UI.HtmlControls
+@using HotelManagementService.Enums
+@using HotelManagementService.Models
 @using Microsoft.Ajax.Utilities
 <!-- Main content -->
-@helper  AcctualWeek()
+
+@helper  AcctualWeek(DateTime firstdayOfWeek)
 {
     for (var i = 0; i < 7; i++)
     {
-        <th>@CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.AddDays(i).DayOfWeek) @(DateTime.Now.AddDays(i).ToString("dd-MM"))</th>
+        <th id="">@CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(firstdayOfWeek.AddDays(i).DayOfWeek) @(firstdayOfWeek.AddDays(i).ToString("dd-MM"))</th>
     }
 }
-@helper  AcctualWeekText()
+@helper  AcctualWeekText(DateTime firstdayOfWeek)
 {
-    <th colspan="6" style=" border: none;text-align: center"><h2>Styczeń @DateTime.Now.Year</h2><h3>@DateTime.Now.ToString("dd.MM")-@DateTime.Now.AddDays(6).ToString("dd.MM")</h3></th>
+    <th id="refresh" colspan=" 6" style=" border: none;text-align: center"><h2 id="remove">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(firstdayOfWeek.Month) @firstdayOfWeek.Year</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3></th>
 }
+@helper  AcctualWeekTextRefresh(DateTime firstdayOfWeek)
+{<h2 id="remove">Styczeń @firstdayOfWeek.Year</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3>}
+@helper ShowRoomState(Dictionary<Event, List<DateTime>> eventDate)
+{
+    
+    foreach (var date in eventDate.Values)
+    {
+        var i = 0;
+        for (int d = 0; d < 7; )
+        {
+            if (date == null || date.Count == 0 || i >= date.Count)
+            {
+                <td></td>
+                d++;
+                i++;
+            }
+            else if (i < date.Count)
+            {
+                if (date[i].ToString("dd.MM.rrrr") != DateTime.Now.AddDays(d).ToString("dd.MM.rrrr") && d < 7)
+                {
+                    <td></td>
+                    d++;
+                }
+
+                else if (date[i].ToString("dd.MM.rrrr") == DateTime.Now.AddDays(d).ToString("dd.MM.rrrr") && d < 7)
+                {
+                    switch (@eventDate.Keys.Select(x => x.Room.RoomState).First())
+                    {
+                        case RoomStates.Zajęty:
+                            <td style="background: red"></td>
+                            break;
+
+                        case RoomStates.Zarezerowany:
+                        <td style="background: orange">></td>
+                            break;
+
+                        case RoomStates.Awaria:
+                        <td style="background: black">></td>
+                            break;
+
+                        case RoomStates.Remont:
+                        <td style="background: silver">></td>
+                            break;
+
+                        case RoomStates.Wolny:
+                            <td></td>
+                            break;
+                    }
+                    d++;
+                    i++;
+                }
+            }
+        }
+           
+        }
+
+
+    }
+
+
+@{
+    var firstdayOfWeek = DateTime.Now;
 
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box" style="width: 100%">
-                <div class="box-header">
-                    <h3 class="box-title">Grafik</h3>
-                </div>
+            <div class="box" style="width: -moz-max-content;width: -webkit-max-content;width: max-content;">
+                <div class=" box-header">
+                <h3 class="box-title">Grafik</h3>
+            </div>
                 <div class="box-body">
                     <table id="tableConf" class="table table-bordered table-striped">
                         <thead>
@@ -28,52 +94,31 @@
                                 <th id="bt_prev" style="border: none; vertical-align: middle; text-align: center;">
                                     <img src="~/Images/br_prev.png">
                                 </th>
-                                @AcctualWeekText()
+                                @AcctualWeekText(firstdayOfWeek)
                                 <th id="bt_next" style="border: none; vertical-align: middle; text-align: center;">
-                                    <img src="~/Images/br_next.png">
+                                    <img id="bt_next_img" src="~/Images/br_next.png">
                                 </th>
                             </tr>
                             <tr>
                                 <th>Nazwa pokoju</th>
-                                @AcctualWeek()
+                                @AcctualWeek(firstdayOfWeek)
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Pokój 001</td>
-                                <td></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td></td>
-                                <td style="background: orange"></td>
-                            </tr>
-                            <tr>
-                                <td>Pokój 002</td>
-                                <td></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td></td>
-                                <td style="background: orange"></td>
-                            </tr>
-                            <tr>
-                                <td>Pokój 003</td>
-                                <td></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td style="background: red"></td>
-                                <td></td>
-                                <td style="background: orange"></td>
-                            </tr>
+                            @foreach (var room in Model)
+                            {
+                                <tr>
+                                    <td>Pokój @room.Room.RoomName</td>
+                                    @{
+                                        @ShowRoomState(room.EventStayTerm)
+                                    }
+                                </tr>
+                            }
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th></th>
-                                @AcctualWeek()
+                                @AcctualWeek(firstdayOfWeek)
                             </tr>
                         </tfoot>
                     </table>
@@ -82,21 +127,32 @@
         </div><!-- /.col -->
     </div><!-- /.row -->            
 </section><!-- /.content -->
+}
 @section scripts{
+    @Scripts.Render("~/bundles/jquery")
     <script>
-        $(document).ready(function() {
+    $(document).ready(function () {
+        var d = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
 
-            var table = $('#tableConf').DataTable(
-            {
-                "bSort": false,
-                "paging": false,
-                "info": false
-            });
-               
-            
-       
+        var months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
+           "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
 
-        $("#tableConf tfoot th").each(function() {
+        @*<h2 id="remove">Styczeń @firstdayOfWeek.Year</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3>*@
+        function acctualWeekText(date) {
+            $('#refresh').remove("#remove").html('<h2 id="remove">'+date.getMonth()+cal.get(Calendar.YEAR)+'</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3>')
+        }
+
+        var table = $('#tableConf').DataTable(
+        {
+            "bSort": false,
+            "paging": false,
+            "info": false
+        });
+
+
+        $("#tableConf tfoot th").each(function () {
             if ($(this).index() == (0)) {
                 var title = $("#tableConf thead th").eq($(this).index()).text();
                 title = title.toLowerCase().replace(/\s+/, "");
@@ -104,14 +160,19 @@
             }
         });
 
-        table.columns().eq(0).each(function(colIdx) {
-            $("input", table.column(colIdx).footer()).on("keyup change", function() {
+        table.columns().eq(0).each(function (colIdx) {
+            $("input", table.column(colIdx).footer()).on("keyup change", function () {
                 table
                     .column(colIdx)
                     .search(this.value)
                     .draw();
             });
         });
+
+        $("#bt_next_img").click(function () {
+
+            $('#refresh').remove("#remove").html('');
+        });
     })
-    </script>
+</script>
 }
