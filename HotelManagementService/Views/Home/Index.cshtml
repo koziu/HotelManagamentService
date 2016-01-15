@@ -1,31 +1,30 @@
-﻿@model IEnumerable<HotelManagementService.ViewModels.RoomEventsViewModel>
-@using System.Globalization
-@using System.Web.UI.HtmlControls
+﻿@using System.Globalization
 @using HotelManagementService.Enums
 @using HotelManagementService.Models
-@using Microsoft.Ajax.Utilities
+@using HotelManagementService.ViewModels
+@model IEnumerable<HotelManagementService.ViewModels.RoomEventsViewModel>
 <!-- Main content -->
-
-@helper  AcctualWeek(DateTime firstdayOfWeek)
+@helper AcctualWeek(DateTime firstdayOfWeek)
 {
-    for (var i = 0; i < 7; i++)
+    for (int i = 0; i < 7; i++)
     {
         <th id="">@CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(firstdayOfWeek.AddDays(i).DayOfWeek) @(firstdayOfWeek.AddDays(i).ToString("dd-MM"))</th>
     }
 }
-@helper  AcctualWeekText(DateTime firstdayOfWeek)
+@helper AcctualWeekText(DateTime firstdayOfWeek)
 {
-    <th id="refresh" colspan=" 6" style=" border: none;text-align: center"><h2 id="remove">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(firstdayOfWeek.Month) @firstdayOfWeek.Year</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3></th>
+    <th id="refresh" colspan=" 6" style="border: none; text-align: center"><h2 id="remove">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(firstdayOfWeek.Month) @firstdayOfWeek.Year</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3></th>
 }
-@helper  AcctualWeekTextRefresh(DateTime firstdayOfWeek)
-{<h2 id="remove">Styczeń @firstdayOfWeek.Year</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3>}
+@helper AcctualWeekTextRefresh(DateTime firstdayOfWeek)
+{<h2 id="remove">Styczeń @firstdayOfWeek.Year</h2>
+    <h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3>
+}
 @helper ShowRoomState(Dictionary<Event, List<DateTime>> eventDate)
 {
-    
     foreach (var date in eventDate.Values)
     {
-        var i = 0;
-        for (int d = 0; d < 7; )
+        int i = 0;
+        for (int d = 0; d < 7;)
         {
             if (date == null || date.Count == 0 || i >= date.Count)
             {
@@ -50,15 +49,15 @@
                             break;
 
                         case RoomStates.Zarezerowany:
-                        <td style="background: orange">></td>
+                            <td style="background: orange">></td>
                             break;
 
                         case RoomStates.Awaria:
-                        <td style="background: black">></td>
+                            <td style="background: black">></td>
                             break;
 
                         case RoomStates.Remont:
-                        <td style="background: silver">></td>
+                            <td style="background: silver">></td>
                             break;
 
                         case RoomStates.Wolny:
@@ -70,109 +69,143 @@
                 }
             }
         }
-           
-        }
-
-
     }
+}
 
 
 @{
-    var firstdayOfWeek = DateTime.Now;
+    DateTime firstdayOfWeek = DateTime.Now;
 
-<section class="content">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box" style="width: -moz-max-content;width: -webkit-max-content;width: max-content;">
-                <div class=" box-header">
-                <h3 class="box-title">Grafik</h3>
-            </div>
-                <div class="box-body">
-                    <table id="tableConf" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th id="bt_prev" style="border: none; vertical-align: middle; text-align: center;">
-                                    <img src="~/Images/br_prev.png">
-                                </th>
-                                @AcctualWeekText(firstdayOfWeek)
-                                <th id="bt_next" style="border: none; vertical-align: middle; text-align: center;">
-                                    <img id="bt_next_img" src="~/Images/br_next.png">
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>Nazwa pokoju</th>
-                                @AcctualWeek(firstdayOfWeek)
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var room in Model)
-                            {
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box" style="width: -moz-max-content; width: -webkit-max-content; width: max-content;">
+                    <div class=" box-header">
+                        <h3 class="box-title">Grafik</h3>
+                    </div>
+                    <div class="box-body">
+                        <table id="tableConf" class="table table-bordered table-striped">
+                            <thead>
                                 <tr>
-                                    <td>Pokój @room.Room.RoomName</td>
-                                    @{
-                                        @ShowRoomState(room.EventStayTerm)
-                                    }
+                                    <th id="bt_prev" style="border: none; text-align: center; vertical-align: middle;">
+                                        <img id="bt_prev_img" src="~/Images/br_prev.png">
+                                    </th>
+                                    <th id="refreshHeader" colspan=" 6" style="border: none; text-align: center"> </th>
+                                    <th id="bt_next" style="border: none; text-align: center; vertical-align: middle;">
+                                        <img id="bt_next_img" src="~/Images/br_next.png">
+                                    </th>
                                 </tr>
-                            }
-                        </tbody>
-                        <tfoot>
-                            <tr>
+                                <tr id="refreshComponents" role="row">
+                                    <th class="sorting_disabled">Nazwa pokoju</th>
+                                    <th class="sorting_disabled" id="removeCompontents"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (RoomEventsViewModel room in Model)
+                                {
+                                    <tr >
+                                        <td>Pokój @room.Room.RoomName</td>
+                                        @{
+                                            @ShowRoomState(room.EventStayTerm)
+                                        }
+                                        
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                            <tr id="refreshComponents">
                                 <th></th>
-                                @AcctualWeek(firstdayOfWeek)
+                                <th id="removeCompontents"></th>
+                                <th id="removeCompontents"></th>
+                                <th id="removeCompontents"></th>
+                                <th id="removeCompontents"></th>
+                                <th id="removeCompontents"></th>
+                                <th id="removeCompontents"></th>
+                                <th id="removeCompontents"></th>
                             </tr>
-                        </tfoot>
-                    </table>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->            
-</section><!-- /.content -->
+                            </tfoot>
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </section>
+    <!-- /.content -->
 }
 @section scripts{
-    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jquery")*@
     <script>
-    $(document).ready(function () {
-        var d = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-
-        var months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
-           "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
-
-        @*<h2 id="remove">Styczeń @firstdayOfWeek.Year</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3>*@
-        function acctualWeekText(date) {
-            $('#refresh').remove("#remove").html('<h2 id="remove">'+date.getMonth()+cal.get(Calendar.YEAR)+'</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3>')
-        }
-
-        var table = $('#tableConf').DataTable(
-        {
-            "bSort": false,
-            "paging": false,
-            "info": false
-        });
+        $(document).ready(function() {
+            var d = new Date();
 
 
-        $("#tableConf tfoot th").each(function () {
-            if ($(this).index() == (0)) {
-                var title = $("#tableConf thead th").eq($(this).index()).text();
-                title = title.toLowerCase().replace(/\s+/, "");
-                $(this).html('<input type="text" placeholder=" Filtruj ' + title + '" />');
-            }
-        });
+            var days = [
+                "Niedziela","Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"
+            ];
+            var months = [
+                "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec",
+                "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"
+            ];
 
-        table.columns().eq(0).each(function (colIdx) {
-            $("input", table.column(colIdx).footer()).on("keyup change", function () {
-                table
-                    .column(colIdx)
-                    .search(this.value)
-                    .draw();
+            function incrementDate(i) {
+                d.setDate(d.getDate() + i);
+            };
+
+            function decrementDate(i) {
+                d.setDate(d.getDate() - i);
+            };
+
+            function acctualWeekHeader() {
+                $('#refreshHeader').remove("#removeHeader").html('<h2 id="removeHeader">' + months[d.getMonth()] + ' ' + d.getFullYear() + '</h2><h3 id="remove">' + d.getDate() + '.' + (d.getMonth() + 1) + '-' + '<b style="display: none">' + incrementDate(7) + '</b>' + d.getDate() + '.' + (d.getMonth() + 1) + '<b style="display: none">' + decrementDate(7) + '</b>' + '</h3>');
+            };
+
+            function acctuaWeekComponents() {
+                var i = 0;
+                $("#removeCompontents").remove();
+                for (i = 0; i < 7; i++) {
+                    $('#refreshComponents').append('<th rowspan="1" colspan="1" id="removeCompontents">' + days[d.getDay()] + ' ' + d.getDate() + '.' + d.getMonth() + '<b style="display: none">' + incrementDate(1) + '</b>' + '</th>');
+                }
+                decrementDate(7);
+            };
+
+            acctuaWeekComponents();
+            acctualWeekHeader();
+           
+            var table = $('#tableConf').DataTable({
+                "bSort": false,
+                "paging": false,
+                "info": false
             });
-        });
+            $("#tableConf tfoot th").each(function() {
+                if ($(this).index() == (0)) {
+                    var title = $("#tableConf thead th").eq($(this).index()).text();
+                    title = title.toLowerCase().replace(/\s+/, "");
+                    $(this).html('<input type="text" placeholder=" Filtruj ' + title + '" />');
+                }
+            });
+            table.columns().eq(0).each(function(colIdx) {
+                $("input", table.column(colIdx).footer()).on("keyup change", function() {
+                    table.column(colIdx).search(this.value).draw();
+                });
+            });
+            
 
-        $("#bt_next_img").click(function () {
+            $("#bt_next_img").click(function() {
 
-            $('#refresh').remove("#remove").html('');
-        });
-    })
-</script>
+                d.setDate(d.getDate() + 8);
+
+                acctualWeekHeader();
+                $("#removeCompontents").remove();
+                acctuaWeekComponents();
+
+            });
+            $("#bt_prev_img").click(function() {
+
+                d.setDate(d.getDate() - 8);
+                acctualWeekHeader();
+                acctuaWeekComponents();
+
+            });
+        })
+    </script>
 }

@@ -1669,6 +1669,7 @@
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <Content Include="Views\Client\ClientReservation.cshtml" />
     <Content Include="Views\Account\NoAuthorize.cshtml" />
+    <Content Include="Views\Home\WeekEvent.cshtml" />
     <None Include="Views\Roles\Create.cshtml" />
     <None Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\GetUsersForRole.cshtml" />

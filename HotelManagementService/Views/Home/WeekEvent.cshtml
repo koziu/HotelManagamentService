@@ -1,0 +1,60 @@
+﻿@using System.Globalization
+@using System.Web.UI.HtmlControls
+@using HotelManagementService.Enums
+@using HotelManagementService.Models
+@helper ShowRoomState(Dictionary<Event, List<DateTime>> eventDate, DateTime dateAcctual)
+{
+
+    foreach (var date in eventDate.Values)
+    {
+        var i = 0;
+        for (int d = 0; d < 7; )
+        {
+            if (date == null || date.Count == 0 || i >= date.Count)
+            {
+                <td></td>
+                d++;
+                i++;
+            }
+            else if (i < date.Count)
+            {
+                if (date[i].ToString("dd.MM.rrrr") != dateAcctual.AddDays(d).ToString("dd.MM.rrrr") && d < 7)
+                {
+                    <td></td>
+                    d++;
+                }
+
+                else if (date[i].ToString("dd.MM.rrrr") == dateAcctual.AddDays(d).ToString("dd.MM.rrrr") && d < 7)
+                {
+                    switch (@eventDate.Keys.Select(x => x.Room.RoomState).First())
+                    {
+                        case RoomStates.Zajęty:
+                            <td style="background: red"></td>
+                            break;
+
+                        case RoomStates.Zarezerowany:
+                        <td style="background: orange">></td>
+                            break;
+
+                        case RoomStates.Awaria:
+                        <td style="background: black">></td>
+                            break;
+
+                        case RoomStates.Remont:
+                        <td style="background: silver">></td>
+                            break;
+
+                        case RoomStates.Wolny:
+                        <td></td>
+                            break;
+                    }
+                    d++;
+                    i++;
+                }
+            }
+        }
+
+    }
+
+
+}
