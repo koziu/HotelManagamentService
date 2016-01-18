@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.SqlServer;
 using HotelManagementService.Enums;
 
 namespace HotelManagementService.Models
@@ -38,6 +39,8 @@ namespace HotelManagementService.Models
     [Required(ErrorMessage = "Musisz podać datę wyjazdu")]
     [DataType(DataType.Date)]
     public DateTime DepatureDate { get; set; }
+
+    public RoomStates RoomState { get; set; }
 
     public virtual ReservationModels Reservation { get; set; }
   }

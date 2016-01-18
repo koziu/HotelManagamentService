@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using HotelManagementService.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -17,6 +18,6 @@ namespace HotelManagementService.DAL.Context
     public DbSet<RoomModels> RoomModels { get; set; }
     public DbSet<RoomElementModels> RoomElementModelses { get; set; }
     public DbSet<EmployeeModels> EmployeeModels { get; set; }
-    //public DbSet<ReservationEvents> ReservationEventse { get; set; } 
+  
   }
 }

@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using HotelManagementService.DAL.Context;
+using HotelManagementService.Enums;
 using HotelManagementService.Models;
 
 namespace HotelManagementService.Controllers
@@ -93,6 +94,18 @@ namespace HotelManagementService.Controllers
         events.Id = Guid.NewGuid();
         events.ArriveDate = clientReservation.Event.ArriveDate;
         events.DepatureDate = clientReservation.Event.DepatureDate;
+        switch (events.ReservationState)
+        {
+          case ReservationStates.Pobyt: case ReservationStates.Przyjazd: case ReservationStates.Wyjazd:
+            events.RoomState = RoomStates.Zajęty;
+            break;
+          case ReservationStates.Zatwierdzona:
+            events.RoomState = RoomStates.Zarezerowany;
+            break;
+          case ReservationStates.Niepotwierdzona: case ReservationStates.Odwołana: case ReservationStates.Zamknięta:
+            events.RoomState = RoomStates.Wolny;
+            break;
+        }
         events.Reservation = new ReservationModels
         {
           Id = reservation.Id,

@@ -2,76 +2,7 @@
 @using HotelManagementService.Enums
 @using HotelManagementService.Models
 @using HotelManagementService.ViewModels
-@model IEnumerable<HotelManagementService.ViewModels.RoomEventsViewModel>
 <!-- Main content -->
-@helper AcctualWeek(DateTime firstdayOfWeek)
-{
-    for (int i = 0; i < 7; i++)
-    {
-        <th id="">@CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(firstdayOfWeek.AddDays(i).DayOfWeek) @(firstdayOfWeek.AddDays(i).ToString("dd-MM"))</th>
-    }
-}
-@helper AcctualWeekText(DateTime firstdayOfWeek)
-{
-    <th id="refresh" colspan=" 6" style="border: none; text-align: center"><h2 id="remove">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(firstdayOfWeek.Month) @firstdayOfWeek.Year</h2><h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3></th>
-}
-@helper AcctualWeekTextRefresh(DateTime firstdayOfWeek)
-{<h2 id="remove">Styczeń @firstdayOfWeek.Year</h2>
-    <h3 id="remove">@firstdayOfWeek.ToString("dd.MM")-@firstdayOfWeek.AddDays(6).ToString("dd.MM")</h3>
-}
-@helper ShowRoomState(Dictionary<Event, List<DateTime>> eventDate)
-{
-    foreach (var date in eventDate.Values)
-    {
-        int i = 0;
-        for (int d = 0; d < 7;)
-        {
-            if (date == null || date.Count == 0 || i >= date.Count)
-            {
-                <td></td>
-                d++;
-                i++;
-            }
-            else if (i < date.Count)
-            {
-                if (date[i].ToString("dd.MM.rrrr") != DateTime.Now.AddDays(d).ToString("dd.MM.rrrr") && d < 7)
-                {
-                    <td></td>
-                    d++;
-                }
-
-                else if (date[i].ToString("dd.MM.rrrr") == DateTime.Now.AddDays(d).ToString("dd.MM.rrrr") && d < 7)
-                {
-                    switch (@eventDate.Keys.Select(x => x.Room.RoomState).First())
-                    {
-                        case RoomStates.Zajęty:
-                            <td style="background: red"></td>
-                            break;
-
-                        case RoomStates.Zarezerowany:
-                            <td style="background: orange">></td>
-                            break;
-
-                        case RoomStates.Awaria:
-                            <td style="background: black">></td>
-                            break;
-
-                        case RoomStates.Remont:
-                            <td style="background: silver">></td>
-                            break;
-
-                        case RoomStates.Wolny:
-                            <td></td>
-                            break;
-                    }
-                    d++;
-                    i++;
-                }
-            }
-        }
-    }
-}
-
 
 @{
     DateTime firstdayOfWeek = DateTime.Now;
@@ -97,31 +28,18 @@
                                 </tr>
                                 <tr id="refreshComponents" role="row">
                                     <th class="sorting_disabled">Nazwa pokoju</th>
-                                    <th class="sorting_disabled" id="removeCompontents"></th>
+                                    <th class="sorting_disabled removeCompontents"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach (RoomEventsViewModel room in Model)
-                                {
-                                    <tr >
-                                        <td>Pokój @room.Room.RoomName</td>
-                                        @{
-                                            @ShowRoomState(room.EventStayTerm)
-                                        }
-                                        
-                                    </tr>
-                                }
+                            <tbody id="refreshbody">
+                                <tr class="removeBody">
+                                    
+                                </tr>
                             </tbody>
                             <tfoot>
                             <tr id="refreshComponents">
                                 <th></th>
-                                <th id="removeCompontents"></th>
-                                <th id="removeCompontents"></th>
-                                <th id="removeCompontents"></th>
-                                <th id="removeCompontents"></th>
-                                <th id="removeCompontents"></th>
-                                <th id="removeCompontents"></th>
-                                <th id="removeCompontents"></th>
+                                <th class="removeCompontents"></th>
                             </tr>
                             </tfoot>
                         </table>
@@ -156,21 +74,52 @@
             };
 
             function acctualWeekHeader() {
-                $('#refreshHeader').remove("#removeHeader").html('<h2 id="removeHeader">' + months[d.getMonth()] + ' ' + d.getFullYear() + '</h2><h3 id="remove">' + d.getDate() + '.' + (d.getMonth() + 1) + '-' + '<b style="display: none">' + incrementDate(7) + '</b>' + d.getDate() + '.' + (d.getMonth() + 1) + '<b style="display: none">' + decrementDate(7) + '</b>' + '</h3>');
+                $('#refreshHeader').remove("#removeHeader").html('<h2 id="removeHeader">' + months[d.getMonth()] + ' ' + d.getFullYear() + '</h2><h3 id="removeHeader">' + d.getDate() + '.' + (d.getMonth() + 1) + '-' + '<b id="removeHeader" style="display: none">' + incrementDate(6) + '</b>' + d.getDate() + '.' + (d.getMonth() + 1) + '<b id="removeHeader" style="display: none">' + decrementDate(6) + '</b>' + '</h3>');
             };
 
-            function acctuaWeekComponents() {
+            function acctualWeekComponents() {
                 var i = 0;
-                $("#removeCompontents").remove();
+                $('.removeCompontents').each(function()  {
+                    $(this).remove();
+                });
                 for (i = 0; i < 7; i++) {
-                    $('#refreshComponents').append('<th rowspan="1" colspan="1" id="removeCompontents">' + days[d.getDay()] + ' ' + d.getDate() + '.' + d.getMonth() + '<b style="display: none">' + incrementDate(1) + '</b>' + '</th>');
+                    $('#refreshComponents').append('<th rowspan="1" colspan="1" class="removeCompontents" style="text-align: center" >' + days[d.getDay()] + '</br> ' + d.getDate() + '.' + (d.getMonth() + 1) + '<b style="display: none">' + incrementDate(1) + '</b>' + '</th>');
                 }
                 decrementDate(7);
             };
 
-            acctuaWeekComponents();
+            function acctualWeekBody() {
+                $(".removeBody").each(function () {
+                    $(this).remove();
+                });
+
+                var dd = d.getDate();
+                var mm = d.getMonth() + 1; //January is 0!
+
+                var yyyy = d.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var acctualDay = yyyy + '/' + mm + '/' + dd;
+
+                $.ajax({
+                    url: '/Home/WeekEvent/?Date=' + acctualDay,
+                    dataType: "html",
+                    success: function (data) {
+                        $("#refreshbody").html(data);
+                    }
+                });
+
+                
+            };
             acctualWeekHeader();
+            acctualWeekComponents();
+            acctualWeekBody();
            
+          
             var table = $('#tableConf').DataTable({
                 "bSort": false,
                 "paging": false,
@@ -192,19 +141,17 @@
 
             $("#bt_next_img").click(function() {
 
-                d.setDate(d.getDate() + 8);
-
+                d.setDate(d.getDate() + 7);
                 acctualWeekHeader();
-                $("#removeCompontents").remove();
-                acctuaWeekComponents();
-
+                acctualWeekComponents();
+                acctualWeekBody();
             });
             $("#bt_prev_img").click(function() {
 
-                d.setDate(d.getDate() - 8);
+                d.setDate(d.getDate() - 7);
                 acctualWeekHeader();
-                acctuaWeekComponents();
-
+                acctualWeekComponents();
+                acctualWeekBody();               
             });
         })
     </script>

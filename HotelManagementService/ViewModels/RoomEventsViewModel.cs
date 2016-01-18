@@ -11,5 +11,6 @@ namespace HotelManagementService.ViewModels
     public RoomModels Room { get; set; }
     public IEnumerable<Event> Events { get; set; }
     public Dictionary<Event, List<DateTime>> EventStayTerm { get; set; }
+
   }
 }

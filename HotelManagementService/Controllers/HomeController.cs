@@ -14,11 +14,11 @@ namespace HotelManagementService.Controllers
     private HotelManagementContext _context = new HotelManagementContext();
 
     [Authorize]
-    public ActionResult Index()
+    public PartialViewResult WeekEvent(DateTime? Date)
     {
       var roomEventsList = new List<RoomEventsViewModel>();
-      
-      foreach (var e in _context.RoomModels.ToList())
+
+      foreach (var e in _context.RoomModels.OrderBy(x => x.RoomName).ToList())
       {
         var roomEvents = _context.Events.Where(x => x.Room.Id == e.Id).Select(x => x).ToList();
         var eventStayTerm = GetEventStayTerm(roomEvents);
@@ -31,7 +31,15 @@ namespace HotelManagementService.Controllers
 
         roomEventsList.Add(roomEventsViewModel);
       }
-      return View(roomEventsList);
+      ViewBag.AcctualDate = Date ?? DateTime.Now.Date;
+      
+      return PartialView(roomEventsList);
+    }
+
+    [Authorize]
+    public ActionResult Index()
+    {
+      return View();
     }
 
     private Dictionary<Event, List<DateTime>> GetEventStayTerm(IEnumerable<Event> eventList)

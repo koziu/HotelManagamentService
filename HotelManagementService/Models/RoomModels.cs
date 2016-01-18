@@ -25,9 +25,6 @@ namespace HotelManagementService.Models
     [Display(Name = "Dodatki:")]
     public virtual ICollection<RoomElementModels> RoomElements { get; set; }
 
-    [Display(Name = "Status")]
-    public RoomStates RoomState { get; set; }
-
     [Display(Name = "Liczba łóżek SB")]
     [Required(ErrorMessage = "Musisz podać liczbę łóżek SB")]
     public int BedSBCOunt { get; set; }
