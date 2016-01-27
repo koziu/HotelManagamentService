@@ -1,71 +1,95 @@
-﻿@using HotelManagementService.Enums
+﻿@using System.Globalization
+@using System.Text
+@using HotelManagementService.Enums
 @using HotelManagementService.Models
 @using HotelManagementService.ViewModels
 @using Microsoft.Ajax.Utilities
 @using WebGrease.Css.Extensions
 @model IEnumerable<HotelManagementService.ViewModels.RoomEventsViewModel>
-@helper ShowRoomState(Dictionary<Event, List<DateTime>> eventDate, DateTime dateAcctual)
+@functions 
 {
-    var dateList = new List<DateTime>();
-    foreach (var d in eventDate.Values)
-    {
-        dateList.AddRange(d);
-    }
 
-    dateList = dateList.Where(x => x.Date >= dateAcctual && x.Date < dateAcctual.AddDays(7)).Select(x => x).ToList();
+    private static HtmlString ShowRoomState(Dictionary<Event, List<DateTime>> eventDate, DateTime dateAcctual)
+    {
+        var dateList = new List<DateTime>();
+        foreach (var d in eventDate.Values)
+        {
+            dateList.AddRange(d);
+        }
 
-    var tableElement = new string[7];
-    for (int i = 0; i < 7; i++)
-    {
-        tableElement[i] = "<td> </td>";
-    }
-    
-    
-    for (int d = 0; d < 7; )
-    {
-        // foreach (DateTime date in dateList)
-        //{
+        dateList = dateList.Where(x => x.Date >= dateAcctual && x.Date <= dateAcctual.AddDays(7)).Select(x => x).ToList();
+
+        var tableElement = new string[7];
+        for (int i = 0; i < 7; i++)
+        {
+            tableElement[i] = "<td> </td>";
+        }
+
+
+        for (int d = 0; d < 7;)
+        {
+            // foreach (DateTime date in dateList)
+            //{
             if (dateList.Count == 0)
             {
-                <td></td>
-                d++;
+                d = 7;
             }
 
-            else if (dateList.Where(date => date.ToString("dd.MM.rrrr") == dateAcctual.AddDays(d).ToString("dd.MM.rrrr")) != null && d < 7)
+            else
             {
-                switch (@eventDate.Where(y => y.Value.Contains(dateAcctual)).Select(x => x.Key.RoomState).First())
+                int d1 = d;
+                var ds = dateList.FirstOrDefault(date => date.ToString("dd.MM.rrrr") == dateAcctual.AddDays(d1).ToString("dd.MM.rrrr"));
+                if (dateList.FirstOrDefault(date => date.ToString("dd.MM.rrrr") == dateAcctual.AddDays(d1).ToString("dd.MM.rrrr")).ToString("dd.MM.rrrr") == dateAcctual.AddDays(d1).ToString("dd.MM.rrrr") && d < 7)
                 {
-                    case RoomStates.Zajęty:
-                        <td style="background: red"></td>
-                        break;
+                    switch (@eventDate.Where(y => y.Value.Contains(dateAcctual.AddDays(d1))).Select(x => x.Key.ReservationState).First())
+                    {
+                            
+                        case ReservationStates.Przyjazd:
+                            tableElement[d] = "<td style=\"background: red\"></td>";
+                            break;    
+                        case ReservationStates.Pobyt:
+                            tableElement[d] = "<td style=\"background: #fb8686\"></td>";
+                            break;
 
-                    case RoomStates.Zarezerowany:
-                        <td style="background: orange">></td>
-                        break;
+                        case ReservationStates.Niepotwierdzona:
+                            tableElement[d] = "<td style=\"background: #c1c0c0\"></td>";
+                            break;
 
-                    case RoomStates.Awaria:
-                        <td style="background: black">></td>
-                        break;
+                        case ReservationStates.Odwołana:
+                            tableElement[d] = "<td style=\"background: #0045ff\"></td>";
+                            break;
 
-                    case RoomStates.Remont:
-                        <td style="background: silver">></td>
-                        break;
+                        case ReservationStates.Wyjazd:
+                            tableElement[d] = "<td style=\"background: #ff9c05\"></td>";
+                            break;
 
-                    case RoomStates.Wolny:
-                        <td></td>
-                        break;
+                        case ReservationStates.Zamknięta:
+                            tableElement[d] = "<td style=\"background: #d80aff\"></td>";
+                            break;
+                        case ReservationStates.Zatwierdzona:
+                            tableElement[d] = "<td style=\"background: #15ff00\"></td>";
+                            break;
+                    }
+                    d++;
                 }
-                d++;
+                else
+                {
+
+                    d++;
+                }
+
             }
-            else if (dateList.Where(date => date.ToString("dd.MM.rrrr") == dateAcctual.AddDays(d).ToString("dd.MM.rrrr")) == null && d < 7)
-            {
-                <td></td>
-                d++;
-            }
-            
-            
-        //}
+            //}
+        }
+        var sb = new StringBuilder();
+
+        for (int i = 0; i < 7; i++)
+        {
+            sb.AppendLine(tableElement[i]);
+        }
+        return new HtmlString(sb.ToString());
     }
+
 }
 @foreach (RoomEventsViewModel room in Model)
 {

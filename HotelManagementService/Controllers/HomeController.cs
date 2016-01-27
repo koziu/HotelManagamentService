@@ -50,6 +50,7 @@ namespace HotelManagementService.Controllers
     private List<DateTime> SetStayTermDate(DateTime ArriveDate, DateTime DepatureDate)
     {
       var diffrenceDay = (int)(DepatureDate - ArriveDate).TotalDays;
+      diffrenceDay++;
       var stayTermDate = new List<DateTime>();
       for (var i = 0; i < diffrenceDay; i++)
       {
