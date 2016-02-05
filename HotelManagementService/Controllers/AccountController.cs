@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -75,19 +76,23 @@ namespace HotelManagementService.Controllers
     [HttpPost]
     [HotelManagamentAuthorize(Roles = "Administrator")]   
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Register(RegisterViewModel model)
+    public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase upload)
     {
       if (ModelState.IsValid)
       {
         var user = new ApplicationUser() { UserName = model.UserName };
         var result = await UserManager.CreateAsync(user, model.Password);
+        using (var reader = new BinaryReader(upload.InputStream))
+        {
+          model.Employee.ProfileImage = reader.ReadBytes(upload.ContentLength);
+        }
         if (result.Succeeded)
         {
           model.Employee.UserId = user.Id;
           model.Employee.Id = Guid.NewGuid();
           _context.EmployeeModels.Add(model.Employee);
           await _context.SaveChangesAsync();
-          await SignInAsync(user, isPersistent: false);
+          //await SignInAsync(user, isPersistent: false);
           return RedirectToAction("Index", "Employee");
         }
         else

@@ -29,13 +29,13 @@ namespace HotelManagementService.Models
     public virtual ReservationStates ReservationState { get; set; }
 
     [Display(Name = "Data przyjazdu")]
-    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+    [DisplayFormat(ApplyFormatInEditMode = true,DataFormatString = "{0:dd/MM/yyyy}")]
     [Required(ErrorMessage = "Musisz podać datę przyjazu")]
     [DataType(DataType.Date)]
     public DateTime ArriveDate { get; set; }
 
     [Display(Name = "Data wyjazdu")]
-    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
     [Required(ErrorMessage = "Musisz podać datę wyjazdu")]
     [DataType(DataType.Date)]
     public DateTime DepatureDate { get; set; }

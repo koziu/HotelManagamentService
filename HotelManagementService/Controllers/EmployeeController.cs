@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using HotelManagementService.Attribute;
 using HotelManagementService.DAL.Context;
@@ -68,10 +70,15 @@ namespace HotelManagementService.Controllers
     [HttpPost]
     [ValidateAntiForgeryToken]
     [HotelManagamentAuthorize(Roles = "Administrator")]
-    public async Task<ActionResult> Create(
-      [Bind(Include = "UserName, Password, ConfirmPassword,Employee")] RegisterViewModel registerViewModel)
+    public ActionResult Create(
+      [Bind(Include = "UserName, Password, ConfirmPassword,Employee")] RegisterViewModel registerViewModel, HttpPostedFileBase upload)
     {
-
+      //if (!ModelState.IsValid) return View();
+      using (var reader = new BinaryReader(upload.InputStream))
+      {
+        registerViewModel.Employee.ProfileImage = reader.ReadBytes(upload.ContentLength);
+      }
+        
       return RedirectToAction("Register", "Account", new { employeeModels = registerViewModel });
     }
 

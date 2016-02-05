@@ -255,7 +255,7 @@
 					<!-- Optionally, you can add icons to the links -->
 					<li>
 						<a href="@Url.Action("Index", "Reservation")">
-							<i class="fa fa-calendar"></i> <span>Rezerwacje</span></a>
+                            <i class="fa fa-bell"></i> <span>Rezerwacje</span></a>
 					</li>
 					<li>
 						<a href="@Url.Action("Index", "Client")">
@@ -270,12 +270,13 @@
 							<i class="fa fa-odnoklassniki"></i> <span>Pracownicy</span></a>
 					</li>
 					<li>
-						<a href="#">
-							<i class="fa fa-envelope"></i> <span>Wiadomości</span></a>
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-calendar"></i> <span>Grafik obłożenia pokoi</span>
+                        </a>
 					</li>
 					<li>
 						<a href="#">
-							<i class="fa fa-history"></i> <span>Historia</span></a>
+                            <i class="fa fa-line-chart"></i> <span>Statystyki</span></a>
 					</li>
 					@*<li>
 						<a href="#">

@@ -21,6 +21,7 @@ namespace HotelManagementService.Controllers
     {
       IQueryable<Event> eventsModel = db.Events.Select(x => x);
       return View(await eventsModel.ToListAsync());
+      
     }
 
     // GET: ReservationModels/Details/5
@@ -96,7 +97,7 @@ namespace HotelManagementService.Controllers
         events.DepatureDate = clientReservation.Event.DepatureDate;
         switch (events.ReservationState)
         {
-          case ReservationStates.Pobyt: case ReservationStates.Przyjazd: case ReservationStates.Wyjazd:
+          case ReservationStates.Pobyt: 
             events.RoomState = RoomStates.Zajęty;
             break;
           case ReservationStates.Zatwierdzona:
@@ -137,12 +138,12 @@ namespace HotelManagementService.Controllers
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      ReservationModels reservationModels = await db.ReservationModelses.FindAsync(id);
-      if (reservationModels == null)
-      {
-        return HttpNotFound();
-      }
-      ViewBag.Id = new SelectList(db.Events, "Id", "Id", reservationModels.Id);
+      var reservationModels = GetClientsReservationModels();
+      reservationModels.Event = await db.Events.FindAsync(id);
+      reservationModels.SelectedClientId = reservationModels.Event.Reservation.ClientId;
+      reservationModels.SelectedRoomId = reservationModels.Event.Room.Id;
+
+      ViewBag.Id = new SelectList(db.Events, "Id", "Id");
       return View(reservationModels);
     }
 
@@ -151,16 +152,28 @@ namespace HotelManagementService.Controllers
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Edit([Bind(Include = "Id")] ReservationModels reservationModels)
+    public async Task<ActionResult> Edit([Bind(Include = "Id,SelectedClientId, SelectedRoomId, Event, Reservation")] ClientsReservationModels reservationModels)
     {
+      reservationModels.Event.Room = await db.RoomModels.FindAsync(reservationModels.SelectedRoomId);
+      reservationModels.Event.Reservation =
+        await db.ReservationModelses.FindAsync(reservationModels.Event.Reservation.Id);
+      reservationModels.Event.Reservation.Client = await db.ClientModels.FindAsync(reservationModels.SelectedClientId);
+      reservationModels.Event.Reservation.ClientId = reservationModels.SelectedClientId;
+      reservationModels.Clients = GetSelectClientListItems(db.ClientModels);
+      reservationModels.Rooms = GetSelectRoomListItems(db.RoomModels);
+
       if (ModelState.IsValid)
       {
-        db.Entry(reservationModels).State = EntityState.Modified;
+        db.Entry(reservationModels.Event).State = EntityState.Modified;
         await db.SaveChangesAsync();
         return RedirectToAction("Index");
       }
-      ViewBag.Id = new SelectList(db.Events, "Id", "Id", reservationModels.Id);
-      return View(reservationModels);
+      ViewBag.Id = new SelectList(db.Events, "Id", "Id", reservationModels.Event.Id);
+      var clientReservationModel = GetClientsReservationModels();
+      clientReservationModel.Event = await db.Events.FindAsync(reservationModels.Event.Id);
+      clientReservationModel.SelectedClientId = reservationModels.SelectedClientId;
+      clientReservationModel.SelectedRoomId = reservationModels.SelectedRoomId;
+      return View(clientReservationModel);
     }
 
     // GET: ReservationModels/Delete/5

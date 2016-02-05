@@ -36,12 +36,6 @@
                                     
                                 </tr>
                             </tbody>
-                            <tfoot>
-                            <tr id="refreshComponents">
-                                <th></th>
-                                <th class="removeCompontents"></th>
-                            </tr>
-                            </tfoot>
                         </table>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
@@ -125,18 +119,18 @@
                 "paging": false,
                 "info": false
             });
-            $("#tableConf tfoot th").each(function() {
-                if ($(this).index() == (0)) {
-                    var title = $("#tableConf thead th").eq($(this).index()).text();
-                    title = title.toLowerCase().replace(/\s+/, "");
-                    $(this).html('<input type="text" placeholder=" Filtruj ' + title + '" />');
-                }
-            });
-            table.columns().eq(0).each(function(colIdx) {
-                $("input", table.column(colIdx).footer()).on("keyup change", function() {
-                    table.column(colIdx).search(this.value).draw();
-                });
-            });
+            //$("#tableConf tfoot th").each(function() {
+            //    if ($(this).index() == (0)) {
+            //        var title = $("#tableConf thead th").eq($(this).index()).text();
+            //        title = title.toLowerCase().replace(/\s+/, "");
+            //        $(this).html('<input type="text" placeholder=" Filtruj ' + title + '" />');
+            //    }
+            //});
+            //table.columns().eq(0).each(function(colIdx) {
+            //    $("input", table.column(colIdx).footer()).on("keyup change", function() {
+            //        table.column(colIdx).search(this.value).draw();
+            //    });
+            //});
             
 
             $("#bt_next_img").click(function() {

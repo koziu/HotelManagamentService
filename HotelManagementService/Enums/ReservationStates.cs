@@ -9,10 +9,8 @@ namespace HotelManagementService.Enums
   {
     Niepotwierdzona,
     Zatwierdzona,
-    Odwołana,
-    Przyjazd,
+    Odwołana,    
     Pobyt,
-    Wyjazd,
     Zamknięta
   }
 }

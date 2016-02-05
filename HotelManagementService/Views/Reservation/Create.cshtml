@@ -29,38 +29,36 @@
                                     @Html.ValidationMessageFor(model => model.SelectedRoomId, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Event.ArriveDate, new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Event.ArriveDate, new { @class = "form-control datepicker"})
-                                    @Html.ValidationMessageFor(model => model.Event.ArriveDate, "", new { @class = "text-danger", })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Event.ArriveDate, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.Event.ArriveDate, new { @class = "form-control datepicker" })
+                                        @Html.ValidationMessageFor(model => model.Event.ArriveDate, "", new { @class = "text-danger", })
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Event.DepatureDate, new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Event.DepatureDate, new { @class = "form-control datepicker" })
-                                    @Html.ValidationMessageFor(model => model.Event.DepatureDate, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Event.ReservationState, new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EnumDropDownListFor(model => model.Event.ReservationState, new { @class = "form-control chosen-select" })
-                                    @Html.ValidationMessageFor(model => model.Event.ReservationState, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
 
-                           
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Dodaj" class="btn btn-danger" />
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Event.DepatureDate, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.Event.DepatureDate, new { @class = "form-control datepicker" })
+                                        @Html.ValidationMessageFor(model => model.Event.DepatureDate, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Event.ReservationState, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EnumDropDownListFor(model => model.Event.ReservationState, new { @class = "form-control chosen-select" })
+                                        @Html.ValidationMessageFor(model => model.Event.ReservationState, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Dodaj" class="btn btn-danger" />
+                                    </div>
+                                </div>
                     }
                     <div>
                         @Html.ActionLink("Powrót", "Index", null, new { @class = "btn btn-default" })
@@ -72,6 +70,11 @@
 </section>
 @section scripts{
     @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/jquery");
     @Styles.Render("~/Content/css"));
-   
+@*<script>
+    $('.input-daterange input').each(function () {
+        $(this).datepicker("clearDates");
+    });
+</script>*@
 }

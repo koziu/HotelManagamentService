@@ -170,6 +170,7 @@
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="DAL\Context\HotelManagementContext.cs" />
     <Compile Include="Enums\CommentsKinds.cs" />
     <Compile Include="Enums\Positions.cs" />
@@ -194,6 +195,10 @@
     <Compile Include="Migrations\201601181336291_roomevent2.Designer.cs">
       <DependentUpon>201601181336291_roomevent2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601281112120_ProfileImageForEmployee.cs" />
+    <Compile Include="Migrations\201601281112120_ProfileImageForEmployee.Designer.cs">
+      <DependentUpon>201601281112120_ProfileImageForEmployee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClientModels.cs" />
@@ -208,6 +213,7 @@
     <Compile Include="Models\RoomReservationModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ClientCountPerMonth.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\RoleUsersViewModel.cs" />
     <Compile Include="ViewModels\RoomEventsViewModel.cs" />
@@ -1688,6 +1694,7 @@
     <Content Include="Views\Roles\GetUsersForRole.cshtml" />
     <None Include="Views\Roles\Index.cshtml" />
     <None Include="Views\Roles\ManageUserRoles.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1710,6 +1717,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601181336291_roomevent2.resx">
       <DependentUpon>201601181336291_roomevent2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601281112120_ProfileImageForEmployee.resx">
+      <DependentUpon>201601281112120_ProfileImageForEmployee.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -51,6 +51,8 @@ namespace HotelManagementService.Models
     [Required(ErrorMessage = "Musisz podać PESEL")]
     public string TaxId { get; set; }
 
+    public byte[] ProfileImage { get; set; }
+
     [ScaffoldColumn(false)]
     public string UserId { get; set; }
   }
