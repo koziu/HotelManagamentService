@@ -23,7 +23,7 @@ namespace HotelManagementService.Controllers
     public ActionResult Index(int year = 2016)
     {
       SetClientsPerMonth(year);
-      return View();
+      return View(_clientCountPerMonths);
     }
 
     private void SetClientsPerMonth(int year)
