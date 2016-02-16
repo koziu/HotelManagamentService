@@ -1,4 +1,6 @@
-﻿@model IEnumerable<HotelManagementService.ViewModels.ClientCountPerMonth>
+﻿@using Microsoft.Ajax.Utilities
+@using WebGrease.Css.Extensions
+@model IEnumerable<HotelManagementService.ViewModels.ClientCountPerMonth>
 <section class="content">
     <div class="row">
         <div class="col-xs-6">
@@ -23,12 +25,15 @@
             </div>
             <!-- /.box -->
         </div>
+       
     </div>
 </section>
 @section scripts{
     @Scripts.Render("~/Scripts/chartjs/Chart.min.js")
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+            
+            var data = @Html.Raw(Json.Encode(Model.Select(x => x.ClientCount.GetValueOrDefault(0))));
             var areaChartData = {
                 labels: ["Styczeń", "Luty", "Marzec", "Kwiecieć", "Maj", "Czerwiec", "Lipiec","Sierpień", "Wrzesień", "Październik","Listopad","Grudzień"],
                 datasets: [
@@ -40,7 +45,7 @@
                         pointStrokeColor: "#c1c7d1",
                         pointHighlightFill: "#fff",
                         pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [65, 59, 80, 81, 56, 55, 40, 100, 59, 80, 81, 56]
+                        data: data
                     }
                 ]
             };

@@ -42,23 +42,23 @@
                         switch (@eventDate.Where(y => y.Value.Contains(dateAcctual.AddDays(d1))).Select(x => x.Key.ReservationState).First())
                         {
                             case ReservationStates.Pobyt:
-                                tableElement[d] = "<td style=\"background: #fb8686\"></td>";
+                                tableElement[d] = "<td style=\"background: #0066ff\"></td>";
                                 break;
 
                             case ReservationStates.Niepotwierdzona:
-                                tableElement[d] = "<td style=\"background: #c1c0c0\"></td>";
+                                tableElement[d] = "<td style=\"background: #ff0000\"></td>";
                                 break;
 
                             case ReservationStates.Odwołana:
-                                tableElement[d] = "<td style=\"background: #0045ff\"></td>";
+                                tableElement[d] = "<td style=\"background: #ff6600\"></td>";
                                 break;
 
                             case ReservationStates.Zamknięta:
-                                tableElement[d] = "<td style=\"background: #d80aff\"></td>";
+                                tableElement[d] = "<td style=\"background: #a6a6a6\"></td>";
                                 break;
                                 
                             case ReservationStates.Zatwierdzona:
-                                tableElement[d] = "<td style=\"background: #15ff00\"></td>";
+                                tableElement[d] = "<td style=\"background: #009900\"></td>";
                                 break;
                         }
                         d++;
