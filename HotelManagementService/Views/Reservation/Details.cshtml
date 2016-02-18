@@ -1,5 +1,5 @@
 ﻿@using HotelManagementService.Models
-@model HotelManagementService.Models.ReservationModels
+@model ClientsReservationModels
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
@@ -11,23 +11,23 @@
                 <div class="box-body">
                     <dl class="dl-horizontal">
                         <dt>
-                            @Html.DisplayNameFor(model => model.Client.Name)
+                            @Html.DisplayNameFor(model => model.Event.Reservation.Client.Name)
                         </dt>
 
                         <dd>
-                            @Html.DisplayFor(model => model.Client.Name)
+                            @Html.DisplayFor(model => model.Event.Reservation.Client.Name)
                         </dd>
                         <dt>
-                            @Html.DisplayNameFor(model => model.Client.Surname)
+                            @Html.DisplayNameFor(model => model.Event.Reservation.Client.Surname)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.Client.Surname)
+                            @Html.DisplayFor(model => model.Event.Reservation.Client.Surname)
                         </dd>
                         <dt>
-                            @Html.DisplayNameFor(model => model.Client.TaxId)
+                            @Html.DisplayNameFor(model => model.Event.Reservation.Client.TaxId)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.Client.TaxId)  
+                            @Html.DisplayFor(model => model.Event.Reservation.Client.TaxId)  
                         </dd>
                     </dl>
                     <hr/>
@@ -52,26 +52,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Event _event in Model.Events)
-                            {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => _event.Room.RoomName)
+                                        @Html.DisplayFor(modelItem => Model.Event.Room.RoomName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => _event.ReservationState)
+                                        @Html.DisplayFor(modelItem => Model.Event.ReservationState)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => _event.ArriveDate)
+                                        @Html.DisplayFor(modelItem => Model.Event.ArriveDate)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => _event.DepatureDate)
+                                        @Html.DisplayFor(modelItem => Model.Event.DepatureDate)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => _event.Price)
+                                        @Html.DisplayFor(modelItem => Model.Event.Price)
                                     </td>
                                 </tr>
-                            }
+                            
                         </tbody>
                         <tfoot>
                             <tr>
@@ -95,7 +93,7 @@
                     </table>
                     <hr/>
                     <p>
-                        @Html.ActionLink("Edytuj", "Edit", new {id = Model.Id}, new {@class = "btn btn-danger"}) 
+                        @Html.ActionLink("Edytuj", "Edit", new {id = Model.Event.Id}, new {@class = "btn btn-danger"}) 
                         @Html.ActionLink("Powrót", "Index", null, new {@class = "btn btn-default"})
                     </p>
                 </div>

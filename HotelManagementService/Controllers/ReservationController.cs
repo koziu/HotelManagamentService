@@ -31,14 +31,15 @@ namespace HotelManagementService.Controllers
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      ReservationModels reservationModels = await db.ReservationModelses.FindAsync(id);
-      reservationModels.Client = await db.ClientModels.FindAsync(reservationModels.ClientId);
+      var @event = new ClientsReservationModels();
+      @event.Event = await db.Events.FindAsync(id);
+      
 
-      if (reservationModels == null)
+      if (@event == null)
       {
         return HttpNotFound();
       }
-      return View(reservationModels);
+      return View(@event);
     }
 
     // GET: ReservationModels/Create
@@ -159,9 +160,9 @@ namespace HotelManagementService.Controllers
         await db.ReservationModelses.FindAsync(reservationModels.Event.Reservation.Id);
       reservationModels.Event.Reservation.Client = await db.ClientModels.FindAsync(reservationModels.SelectedClientId);
       reservationModels.Event.Reservation.ClientId = reservationModels.SelectedClientId;
+      reservationModels.Event.Price = reservationModels.Event.Reservation.Events.Select(x => x.Price).First();
       reservationModels.Clients = GetSelectClientListItems(db.ClientModels);
       reservationModels.Rooms = GetSelectRoomListItems(db.RoomModels);
-
       if (ModelState.IsValid)
       {
         db.Entry(reservationModels.Event).State = EntityState.Modified;
@@ -183,12 +184,12 @@ namespace HotelManagementService.Controllers
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      ReservationModels reservationModels = await db.ReservationModelses.FindAsync(id);
-      if (reservationModels == null)
+      Event @event = await db.Events.FindAsync(id);
+      if (@event == null)
       {
         return HttpNotFound();
       }
-      return View(reservationModels);
+      return View(@event);
     }
 
     // POST: ReservationModels/Delete/5
@@ -196,8 +197,8 @@ namespace HotelManagementService.Controllers
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> DeleteConfirmed(Guid id)
     {
-      ReservationModels reservationModels = await db.ReservationModelses.FindAsync(id);
-      db.ReservationModelses.Remove(reservationModels);
+      Event @event = await db.Events.FindAsync(id);
+      db.Events.Remove(@event);
       await db.SaveChangesAsync();
       return RedirectToAction("Index");
     }

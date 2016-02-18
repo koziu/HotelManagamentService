@@ -29,10 +29,9 @@ namespace HotelManagementService
         "~/Content/jQuery/jQuery-2.1.4.min.js",
         "~/Content/dist/js/app.min.js",
         "~/Content/bootstrap/js/bootstrap.min.js",
-        "~/Scripts/jquery-{version}.js",
         "~/Scripts/chosen/chosen.jquery.min.js",
-        "~/Scripts/datepicker/bootstrap-datepicker.js",
-        "~/Scripts/jQueryUI/jquery-ui.min.js"
+        "~/Scripts/datepicker/bootstrap-datepicker.js"
+        //"~/Scripts/jQueryUI/jquery-ui.min.js"
         ));
       // Use the development version of Modernizr to develop with and learn from. Then, when you're
       // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

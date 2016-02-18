@@ -1,6 +1,7 @@
-﻿@using Microsoft.Ajax.Utilities
-@using WebGrease.Css.Extensions
-@model IEnumerable<HotelManagementService.ViewModels.ClientCountPerMonth>
+﻿@model IEnumerable<HotelManagementService.ViewModels.ClientCountPerMonth>
+<style>
+    .ui-datepicker-calendar { display: none; }
+</style>
 <section class="content">
     <div class="row">
         <div class="col-xs-6">
@@ -13,12 +14,19 @@
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                       
                     </div>
                 </div>
                 <div class="box-body">
                     <div class="chart">
                         <canvas id="barChart" style="height: 230px"></canvas>
+                    </div>
+                    <div>
+                        @using (Html.BeginForm("Index", "Statistic", FormMethod.Get))
+                        {
+                            @Html.TextBox("year", null, new {@placeholder = "Wpisz datę"})
+                            <input type="submit" id="show" value="Pokaż" />
+                        }                       
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -30,12 +38,29 @@
 </section>
 @section scripts{
     @Scripts.Render("~/Scripts/chartjs/Chart.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/datetime")
     <script>
-        $(document).ready(function () {
-            
+        $(document).ready(function() {
+            //$("#show").click(function() {
+            //    var title = $("#year").val();
+            //    if (title == "" || title == null) {
+            //    } else {
+            //        alert("Please enter only alphanumeric values for your advertisement title");
+            //    }
+            //});
+            $("#year").datepicker({
+                changeMonth: false,
+                changeYear: true,
+                showButtonPanel: false,
+                dateFormat: 'yy'
+            });
+
             var data = @Html.Raw(Json.Encode(Model.Select(x => x.ClientCount.GetValueOrDefault(0))));
             var areaChartData = {
-                labels: ["Styczeń", "Luty", "Marzec", "Kwiecieć", "Maj", "Czerwiec", "Lipiec","Sierpień", "Wrzesień", "Październik","Listopad","Grudzień"],
+                labels: ["Styczeń", "Luty", "Marzec", "Kwiecieć", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"],
                 datasets: [
                     {
                         label: "Electronics",
@@ -90,4 +115,7 @@
             barChart.Bar(barChartData, barChartOptions);
         });
     </script>
+    <style>
+        .ui-datepicker-calendar { display: none; }
+    </style>
 }

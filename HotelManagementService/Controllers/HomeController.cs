@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using HotelManagementService.DAL.Context;
 using HotelManagementService.Models;
 using HotelManagementService.ViewModels;
@@ -58,6 +59,11 @@ namespace HotelManagementService.Controllers
       }
 
       return stayTermDate;
+    }
+
+    public ViewResult Test()
+    {
+      return View();
     }
 
     //public ActionResult About()

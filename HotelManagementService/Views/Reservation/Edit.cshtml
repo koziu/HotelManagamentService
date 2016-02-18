@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Event.ArriveDate, new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Event.ArriveDate, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.Event.ArriveDate, new {@class = "form-control", @Value = Model.Event.ArriveDate })
                                     @Html.ValidationMessageFor(model => model.Event.ArriveDate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -45,13 +45,13 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Event.DepatureDate, new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Event.DepatureDate, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.Event.DepatureDate, new {@class = "form-control", @Value=Model.Event.DepatureDate})
                                     @Html.ValidationMessageFor(model => model.Event.DepatureDate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Event.ReservationState, new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.Event.ReservationState, new { @class = "control-label col-md-2",  data_typeahead = "dsfsdfsd" })
                                 <div class="col-md-10">
                                     @Html.EnumDropDownListFor(model => model.Event.ReservationState, new { @class = "form-control chosen-select" })
                                     @Html.ValidationMessageFor(model => model.Event.ReservationState, "", new { @class = "text-danger" })
@@ -60,7 +60,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Dodaj" class="btn btn-danger" />
+                                    <input type="submit" value="Zapisz" class="btn btn-danger" />
                                 </div>
                             </div>
                         </div>
@@ -75,6 +75,55 @@
 </section>
 @section scripts{
     @Scripts.Render("~/bundles/bootstrap");
+    @Scripts.Render("~/bundles/jquery");
     @Styles.Render("~/Content/css"));
+    @Styles.Render("~/bundles/datetime");
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
 
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[name="Event.ArriveDate"]').daterangepicker(
+                {
+                    "singleDatePicker": true,
+                    "autoApply": true,
+                    "opens": "center",
+                    "showDropdowns": true
+
+                },
+                function (start, end, label) {
+                    $('#Event_ArriveDate').val(start.format('YYYY/MM/DD'));
+                }
+            );
+            $('input[name="Event.DepatureDate"]').daterangepicker(
+                {
+                    "singleDatePicker": true,
+                    "autoApply": true,
+                    "opens": "center",
+                    "showDropdowns": true,
+                    "minDate": $('#Event_ArriveDate').val()
+                },
+                  function (start, end, label) {
+                      $('#Event_DepatureDate').val(start.format('YYYY/MM/DD'));
+                  });
+            $('input[name="Event.ArriveDate"]').change(function () {
+                $('input[name="Event.DepatureDate"]').daterangepicker(
+                {
+                    "singleDatePicker": true,
+                    "autoApply": true,
+                    "opens": "center",
+                    "showDropdowns": true,
+                    "minDate": $('#Event_ArriveDate').val()
+
+                });
+
+
+            });
+        });
+    </script>
 }

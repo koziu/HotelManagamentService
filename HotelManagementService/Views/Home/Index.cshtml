@@ -56,7 +56,9 @@
     <!-- /.content -->
 }
 @section scripts{
-    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jquery.dataTables")*@
+
     <script>
         $(document).ready(function() {
             var d = new Date();
@@ -123,14 +125,14 @@
             acctualWeekHeader();
             acctualWeekComponents();
             acctualWeekBody();
-           
+            //var table = $('#tableConf').DataTable({
+            //    "bSort": false,
+            //    "bFilter": false,
+            //    "paging": false,
+            //    "info": false
+            //});
           
-            var table = $('#tableConf').DataTable({
-                "bSort": false,
-                "bFilter": false,
-                "paging": false,
-                "info": false
-            });
+            
             //$("#tableConf tfoot th").each(function() {
             //    if ($(this).index() == (0)) {
             //        var title = $("#tableConf thead th").eq($(this).index()).text();

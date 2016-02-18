@@ -10,7 +10,7 @@ using HotelManagementService.ViewModels;
 
 namespace HotelManagementService.Controllers
 {
-  [RoutePrefix("Statistic")]
+  //[RoutePrefix("Statistic")]
   public class StatisticController : Controller
   {
     private ClientCountPerMonth[] _clientCountPerMonths = new ClientCountPerMonth[12];
