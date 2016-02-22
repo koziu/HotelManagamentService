@@ -5,7 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HotelManagementService.DAL.Context
 {
-  public class HotelManagementContext : DbContext
+  public class HotelManagementContext : DbContext, IHotelManagementContext
   {
     public HotelManagementContext()
       : base("HotelManagement")

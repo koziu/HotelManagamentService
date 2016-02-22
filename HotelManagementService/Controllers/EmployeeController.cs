@@ -1,37 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HotelManagementService.Attribute;
-using HotelManagementService.DAL.Context;
 using HotelManagementService.Models;
-using HotelManagementService.ViewModels;
+using HotelManagementService.Models.Interfaces;
 
 namespace HotelManagementService.Controllers
 {
   public class EmployeeController : Controller
   {
-    private readonly HotelManagementContext _context = new HotelManagementContext();
     private readonly ApplicationDbContext _appContext = new ApplicationDbContext();
+    private readonly IEmployeesService _employeesService;
+
+    public EmployeeController(IEmployeesService employeesService)
+    {
+      _employeesService = employeesService;
+    }
 
     // GET: Employee
     [HotelManagamentAuthorize(Roles = "Administrator, Employee")]
     public ActionResult Index()
     {
       var registerViewModelList = new List<RegisterViewModel>();
-      foreach (var employee in _context.EmployeeModels.ToList())
+      foreach (EmployeeModels employee in _employeesService.GetEmployees())
       {
-        var registerViewModel = new RegisterViewModel();     
-        var userIdText = employee.UserId; 
-        var appUser = _appContext.Users.Find(userIdText) as ApplicationUser;
+        var registerViewModel = new RegisterViewModel();
+        string userIdText = employee.UserId;
+        ApplicationUser appUser = _appContext.Users.Find(userIdText);
 
         registerViewModel.Employee = employee;
-        if (appUser != null) registerViewModel.UserName = appUser.UserName;    
+        if (appUser != null) registerViewModel.UserName = appUser.UserName;
         registerViewModelList.Add(registerViewModel);
       }
 
@@ -41,13 +43,13 @@ namespace HotelManagementService.Controllers
 
     // GET: Employee/Details/5
     [HotelManagamentAuthorize(Roles = "Administrator, Employee")]
-    public async Task<ActionResult> Details(Guid id)
+    public async Task<ActionResult> Details(Guid? id)
     {
       if (id == null)
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      var employeeModels = await _context.EmployeeModels.FindAsync(id);
+      EmployeeModels employeeModels = _employeesService.GetEmployee(id);
       if (employeeModels == null)
       {
         return HttpNotFound();
@@ -63,35 +65,35 @@ namespace HotelManagementService.Controllers
       return View();
     }
 
-     //POST: Employee/Create
-     //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-     //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+    //POST: Employee/Create
+    //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+    //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     [HotelManagamentAuthorize(Roles = "Administrator")]
     public ActionResult Create(
-      [Bind(Include = "UserName, Password, ConfirmPassword,Employee")] RegisterViewModel registerViewModel, HttpPostedFileBase upload)
+      [Bind(Include = "UserName, Password, ConfirmPassword,Employee")] RegisterViewModel registerViewModel,
+      HttpPostedFileBase upload)
     {
       //if (!ModelState.IsValid) return View();
       using (var reader = new BinaryReader(upload.InputStream))
       {
         registerViewModel.Employee.ProfileImage = reader.ReadBytes(upload.ContentLength);
       }
-        
-      return RedirectToAction("Register", "Account", new { employeeModels = registerViewModel });
+
+      return RedirectToAction("Register", "Account", new {employeeModels = registerViewModel});
     }
 
     [HotelManagamentAuthorize(Roles = "Administrator")]
     // GET: Employee/Edit/5
-    public async Task<ActionResult> Edit(Guid id)
+    public async Task<ActionResult> Edit(Guid? id)
     {
       if (id == null)
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      RegisterViewModel registerViewModel = new RegisterViewModel();
-      registerViewModel.Employee  = await _context.EmployeeModels.FindAsync(id);
+      var registerViewModel = new RegisterViewModel {Employee = _employeesService.GetEmployee(id)};
       if (registerViewModel.Employee == null)
       {
         return HttpNotFound();
@@ -106,27 +108,33 @@ namespace HotelManagementService.Controllers
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Edit(
-      [Bind(Include = "Employee")] RegisterViewModel registerViewModel)
+      [Bind(Include = "Employee")] RegisterViewModel registerViewModel, HttpPostedFileBase upload)
     {
-      if (ModelState.IsValid)
+      //if (ModelState.IsValid)
+      //{
+      //zapisanie AppUSer
+      using (var reader = new BinaryReader(upload.InputStream))
       {
-        //zapisanie AppUSer
-        _context.Entry(registerViewModel.Employee).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Index");
+        registerViewModel.Employee.ProfileImage = reader.ReadBytes(upload.ContentLength);
       }
+      var id = _employeesService.GetEmployee(registerViewModel.Employee.Id).UserId;
+
+      registerViewModel.Employee.UserId = id;
+      _employeesService.EditEmployee(registerViewModel.Employee);
+      return RedirectToAction("Index");
+      //}
       return View(registerViewModel);
     }
 
     // GET: Employee/Delete/5
     [HotelManagamentAuthorize(Roles = "Administrator")]
-    public async Task<ActionResult> Delete(Guid id)
+    public async Task<ActionResult> Delete(Guid? id)
     {
       if (id == null)
       {
         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
       }
-      var employeeModels = await _context.EmployeeModels.FindAsync(id);
+      EmployeeModels employeeModels = _employeesService.GetEmployee(id);
       if (employeeModels == null)
       {
         return HttpNotFound();
@@ -138,11 +146,11 @@ namespace HotelManagementService.Controllers
     [HotelManagamentAuthorize(Roles = "Administrator")]
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> DeleteConfirmed(Guid id)
+    public async Task<ActionResult> DeleteConfirmed(Guid? id)
     {
-      var employeeModels = await _context.EmployeeModels.FindAsync(id);
-      _context.EmployeeModels.Remove(employeeModels);
-      await _context.SaveChangesAsync();
+      EmployeeModels employeeModels = _employeesService.GetEmployee(id);
+      _employeesService.DeleteEmployee(employeeModels);
+
       return RedirectToAction("Index");
     }
 
@@ -150,7 +158,8 @@ namespace HotelManagementService.Controllers
     {
       if (disposing)
       {
-        _context.Dispose();
+        _employeesService.Dispose();
+        _appContext.Dispose();
       }
       base.Dispose(disposing);
     }

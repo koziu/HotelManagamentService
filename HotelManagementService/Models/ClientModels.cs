@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 using HotelManagementService.Enums;
+using HotelManagementService.Validators;
 
 namespace HotelManagementService.Models
 {
@@ -50,6 +51,7 @@ namespace HotelManagementService.Models
     public string Surname { get; set; }
 
     [Display(Name = "PESEL")]
+    [IsPesel()]
     [Required(ErrorMessage = "Musisz podać PESEL")]
     public string TaxId { get; set; }
 
