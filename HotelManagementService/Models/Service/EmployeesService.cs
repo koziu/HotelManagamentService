@@ -7,11 +7,11 @@ using System.Web;
 
 namespace HotelManagementService.Models.Service
 {
-  public class EmployeesSerivce : IEmployeesService
+  public class EmployeesSerivce : Service, IEmployeesService
   {
     private readonly IDataModelEF _context ;
 
-    public EmployeesSerivce(IDataModelEF context)
+    public EmployeesSerivce(IDataModelEF context) : base(context)
     {
       _context = context;
     }

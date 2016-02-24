@@ -4,7 +4,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace HotelManagementService.Models.Interfaces
 {
-  public interface IClientsService
+  public interface IClientsService : IService
   {
     List<ClientModels> GetClients();
     ClientModels GetClient(Guid? clientId);
@@ -12,6 +12,5 @@ namespace HotelManagementService.Models.Interfaces
     void AddClient(ClientModels client);
     void EditClient(ClientModels client);
     DbRawSqlQuery<T> GetEventByClientId<T>(Guid? id);
-    void Dispose();
   }
 }

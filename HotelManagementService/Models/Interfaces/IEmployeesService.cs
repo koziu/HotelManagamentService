@@ -7,13 +7,12 @@ using Microsoft.Ajax.Utilities;
 
 namespace HotelManagementService.Models.Interfaces
 {
-  public interface IEmployeesService
+  public interface IEmployeesService : IService
   {
     List<EmployeeModels> GetEmployees();
     EmployeeModels GetEmployee(Guid? employeeId);
     void DeleteEmployee(EmployeeModels employee);
     void AddEmployee(EmployeeModels employee);
     void EditEmployee(EmployeeModels employee);
-    void Dispose();
   }
 }

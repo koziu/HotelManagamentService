@@ -9,14 +9,14 @@ using HotelManagementService.ViewModels;
 
 namespace HotelManagementService.Models.Service
 {
-  public class ClientsService : IClientsService
+  public class ClientsService : Service, IClientsService
   {
     private const string GetEventsByClientIdQueryText =
      @"SELECT e.Price, e.ReservationState, e.ArriveDate, e.DepatureDate FROM dbo.Events e join dbo.Reservation r on r.Id = e.Reservation_Id where r.ClientId = @p0";
 
     private readonly IDataModelEF _context;
 
-    public ClientsService(IDataModelEF context)
+    public ClientsService(IDataModelEF context) : base(context)
     {
       _context = context;
     }
@@ -71,14 +71,6 @@ namespace HotelManagementService.Models.Service
       using (var db = _context.CreateNew())
       {
         return db.Database.SqlQuery<T>(GetEventsByClientIdQueryText, id);
-      }
-    }
-
-    public void Dispose()
-    {
-      using (var db = _context.CreateNew())
-      {
-        db.Dispose();
       }
     }
   }
